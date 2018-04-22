@@ -1,0 +1,43 @@
+{
+  "name": "vue-ssr",
+  "version": "1.0.0",
+  "description": "To learning how to build up Vue.js ssr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production webpack --progress --config build/webpack.prod.config.js --mode production",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --progress --config build/webpack.dev.config.js --mode development",
+    "start": "npm run dev"
+  },
+  "author": "lbwa <mr_lbw@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.1.0",
+    "babel-core": "^6.26.0",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.4",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.0.6",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.1",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "url-loader": "^1.0.1",
+    "vue-loader": "^14.2.2",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.11",
+    "webpack-dev-server": "^3.1.1",
+    "webpack-merge": "^4.1.2"
+  }
+}

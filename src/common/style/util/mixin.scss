@@ -1,0 +1,7 @@
+@mixin position ($type, $left, $top, $right, $bottom) {
+  position: $type;
+  left: $left#{px};
+  top: $top#{px};
+  right: $right#{px};
+  bottom: $bottom#{px};
+}

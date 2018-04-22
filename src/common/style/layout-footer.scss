@@ -1,0 +1,12 @@
+@import './utils.scss';
+
+a {
+  color: $color-medium;
+}
+
+#layout-footer {
+	margin: 65px auto 0;
+	color: $color-medium;
+	font-size: 14px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+}
