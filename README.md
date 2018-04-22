@@ -2,6 +2,13 @@
 
 > A Vue.js Server-Side Rendering example
 
+<a href="https://travis-ci.org/lbwa/vue-ssr" target="_blank">
+  <img src="https://travis-ci.org/lbwa/vue-ssr.svg?branch=master"/>
+</a>
+<a href="https://codecov.io/gh/lbwa/vue-ssr" target="_blank">
+  <img src="https://codecov.io/gh/lbwa/vue-ssr/branch/master/graph/badge.svg" />
+</a>
+
 ## Build Setup
 
 ``` bash
