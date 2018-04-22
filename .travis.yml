@@ -17,7 +17,7 @@ branches:
     - master
 
 before_install:
-  - export CHROME_BIN=chrome-browser
+  - export CHROME_BIN=chromium-browser
 
 install:
   - yarn
