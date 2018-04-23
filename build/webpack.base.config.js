@@ -22,6 +22,7 @@ const createLintingRule = () => {
 }
 
 module.exports = {
+  mode: process.env.NODE_ENV || 'production', // development || production
   target: 'web',
   context: path.resolve(__dirname, '../'), // 当配置文件不在根目录时，此处不可少，因为 webpack 默认从当前目录解析
   entry: resolve('client/main.js'),

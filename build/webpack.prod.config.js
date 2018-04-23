@@ -13,12 +13,12 @@ const env = process.env.NODE_ENV === 'testing'
 /**
  * 1. extract-text-webpack-plugin 该插件用于将样式表从 打包 js （这里指 output 中
  * 的 bundle.js）中分离出来单独打包成一个 css 文件，之后在头部单独引入。
- * 
+ *
  * 2. 2018.3.14 该插件暂只有通过  extract-text-webpack-plugin@next 安装4.0-beta.0
- * 版本以支持 webpack 4.0+。 
+ * 版本以支持 webpack 4.0+。
  * 正常安装将报错：DeprecationWarning: Tapable.plugin is deprecated. Use new API on `.hooks` instead。
  * 原因 https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/701
- * 
+ *
  */
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -35,7 +35,7 @@ function resolve (dir) {
 module.exports = merge(baseWebpackConfig, {
   entry: {
     app: resolve('client/main.js'),
-    vendor: ['vue'] // 数组中的类库将单独打包成 vendor.xxx.js 
+    // vendor: ['vue'] // 数组中的类库将单独打包成 vendor.xxx.js，webpack 4 不必要
   },
 
   output: {
@@ -108,46 +108,44 @@ module.exports = merge(baseWebpackConfig, {
     // 以下为 webpack 3 的配置，用于打包第三方类库和生成的 webpack 代码
     // webpack 4.0 已经移除 webpack.optimize.CommonsChunkPlugin，使用 config.optimization.splitChunks 代替
 
-    new webpack.optimize.CommonsChunkPlugin({ // 此函数执行分离类库并打包
-      name: 'vendor'
-    }),
-    // 此处 vendor 一定要先于 runtime 执行，否则失效
-    new webpack.optimize.CommonsChunkPlugin({  // 打包生成的 webpack 代码
-      name: 'runtime'
-    })
+    // new webpack.optimize.CommonsChunkPlugin({ // 此函数执行分离类库并打包
+    //   name: 'vendor'
+    // }),
+    // // 此处 vendor 一定要先于 runtime 执行，否则失效
+    // new webpack.optimize.CommonsChunkPlugin({  // 打包生成的 webpack 代码
+    //   name: 'runtime'
+    // })
   ],
 
   // webpack 4.0+ 配置 splitChunks 教程：
   // https://gist.github.com/sokra/1522d586b8e5c0f5072d7565c2bee693?utm_source=aotu_io&utm_medium=liteo2_web
 
-  // optimization: {
-  //   // runtime 指 webpack 中内置的一个处理不同模块依赖关系的 js 模板
-  //   runtimeChunk: {
-  //     // runtimeChunk 用于将 app 中生成的 webpack 代码打包。
+  optimization: {
+    // runtime 指 webpack 中内置的一个处理不同模块依赖关系的 js 模板
+    runtimeChunk: {
+      // runtimeChunk 用于将 app 中生成(非 entry 的代码)的 webpack 代码打包。
 
-  //     /** 使用背景：新模块加入 webpack 时，webpack 会给模块添加一个索引，若新模块加入至
-  //      * 中间位置，将导致后面所有模块 id 发生变化，这样会导致新的 chunkHash 生成。这样
-  //      * 就不能使浏览器常缓存。
-  //      */
+      /** 使用背景：新模块加入 webpack 时，webpack 会给模块添加一个索引，若新模块加入
+       * 至中间位置，将导致后面所有模块 id 发生变化，这样会导致新的 chunkHash 生成。
+       * 这样就不能使浏览器常缓存。
+       */
 
-  //     // 将 app 生成的 webpack 代码单独打包就可规避这个问题
-  //     name: 'runtime' // 可指定为任意没有在 entry 使用过的名称
-  //   },
-  //   splitChunks: { // 4.0+ 打包类库等第三方引用代码，单独存放
-  //     cacheGroups: { // 设置缓存的 chunks
-  //       commons: { // 所有被处理类库文件的共享代码
-  //         chunks: 'initial', // 必须三选一， 'initial'|'all'|'async'(默认值)
-  //         minSize: 0,
-  //         minChunks: 1
-  //       },
-  //       vendor: { // key 为 entry 中定义的入口名称，这是 key 的私有配置
-  //         test: /[\\/]node_modules[\\/]/,
-  //         name: 'vendor', // 要缓存分离出的 chunk 名称
-  //         chunks: 'all'
-  //       }
-  //     }
-  //   }
-  // }
+      // 将 app 生成的 webpack 代码单独打包就可规避这个问题
+      name: 'runtime' // 可指定为任意没有在 entry 使用过的名称
+    },
+    splitChunks: { // 4.0+ 打包类库等第三方引用代码，单独存放
+      cacheGroups: { // 设置缓存的 chunks
+        commons: { // 所有被处理类库文件的共享代码
+          chunks: 'all', // 必须三选一， 'initial'|'all'|'async'(默认值)
+        },
+        vendor: { // key 为 entry 中定义的入口名称，这是 key 的私有配置
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor', // 要缓存分离出的 chunk 名称
+          chunks: 'all'
+        }
+      }
+    }
+  }
 })
 
 /**

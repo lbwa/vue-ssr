@@ -5,6 +5,7 @@ const config = require('../config')
 const merge = require('webpack-merge') // 合并设置
 const HtmlWebpackPlugin = require('html-webpack-plugin')  // 将打包好的 js 插入 HTML
 
+// 用于 CSS modules
 const createLocalIdentName = process.env.NODE_ENV === 'development'
   ? '[path]-[name]-[hash:base64:5]'
   : '[hash:base64:5]'
@@ -78,9 +79,9 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html', // 模板文件
       inject: true
     }), // 自动向 index.html 中插入 bundle.js
-    
+
     new webpack.HotModuleReplacementPlugin(),
-    
-    new webpack.NoEmitOnErrorsPlugin()
+
+    // new webpack.NoEmitOnErrorsPlugin() webpack 4 废弃
   ]
 })
