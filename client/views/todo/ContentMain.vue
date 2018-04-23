@@ -1,33 +1,33 @@
 <template>
- <div id="layout-content">
-   <input
-     type="text"
-     class="add-item"
-    autofocus
-     placeholder="What's next to do ?"
-     @keyup.enter="addTodoItem"
+  <div class="content-main">
+    <input
+      type="text"
+      class="add-item"
+      autofocus
+      placeholder="What's next to do ?"
+      @keyup.enter="addTodoItem"
     />
-   <ContentItem
-     :item="item"
-     :checkStatu="checkStatu"
-     v-for="item of filteredItems"
-     :key="item.id"
-     @refreshItems="refreshItems"
-     @refreshItemCompleted="refreshItemCompleted"
+    <MainItem
+      :item="item"
+      :checkStatus="checkStatus"
+      v-for="item of filteredItems"
+      :key="item.id"
+      @refreshItems="refreshItems"
+      @refreshItemCompleted="refreshItemCompleted"
     />
-   <ContentHelper
-     :selected="hasSelected"
-     :leftNum="leftNumber"
-     :showCompletedText="completedText"
-     @userSelect="refreshSelect"
-     @clearCompleted="clearCompleted"
+    <MainHelper
+      :selected="hasSelected"
+      :remainder="remainder"
+      :showCompletedText="completedText"
+      @userSelect="refreshSelect"
+      @clearCompleted="clearCompleted"
     />
- </div>
+  </div>
 </template>
 
 <script>
-import ContentItem from './ContentItem'
-import ContentHelper from './ContentHelper'
+import MainItem from './MainItem'
+import MainHelper from './MainHelper'
 
 let id = 0 // 配置新建 item 的索引
 
@@ -37,18 +37,18 @@ export default {
       items: [], // 所有条目的容器
       hasSelected: 'all', // 当前用户选择的项 all/active/completed
       completedText: 'Clear Completed',
-      checkStatu: false,
+      checkStatus: false,
       timer: 0
     }
   },
 
   components: {
-    ContentItem,
-    ContentHelper
+    MainItem,
+    MainHelper
   },
 
   computed: {
-    leftNumber () {
+    remainder () {
       return this.items.filter(item => { // 只要 items 发生变化就会重新计算
         return !item.completed
       }).length
@@ -106,10 +106,10 @@ export default {
 }
 </script>
 
-<style lang="scss">
- @import '../common/style/utils.scss';
+<style lang="scss" scoped>
+ @import '~scss/utils.scss';
 
-#layout-content {
+.content-main {
   margin: 0 auto;
   width: 600px;
   box-shadow: 0 0 5px $color-medium-well;

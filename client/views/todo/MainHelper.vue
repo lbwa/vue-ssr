@@ -1,17 +1,15 @@
 <template>
   <div class="helper">
-    <span class="helper-left">{{leftNum}} items left</span>
+    <span class="helper-left">{{ remainder }} items left</span>
     <span class="helper-buttons">
       <span
-      v-for=" statu of status"
-      :key="statu"
-      :class="[statu, selected === statu ? 'activated' : '']"
-      @click="toggleSelect(statu)"
-      >
-        {{statu}}
-      </span>
+      v-for=" item of status"
+      :key="item"
+      :class="[item, selected === item ? 'activated' : '']"
+      @click="toggleSelect(item)"
+      >{{ item }}</span>
     </span>
-    <span class="clear" @click="clearAllCompleted">{{showCompletedText}}</span>
+    <span class="clear" @click="clearAllCompleted">{{ showCompletedText }}</span>
   </div>
 </template>
 
@@ -22,7 +20,7 @@ export default {
       type: String,
       required: true
     },
-    leftNum: {
+    remainder: {
       type: Number,
       required: true
     },
@@ -39,8 +37,8 @@ export default {
   },
 
   methods: {
-    toggleSelect (statu) {
-      this.$emit('userSelect', statu)
+    toggleSelect (item) {
+      this.$emit('userSelect', item)
     },
 
     clearAllCompleted () {
@@ -50,8 +48,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '../common/style/utils.scss';
+<style lang="scss" scoped>
+ @import '~scss/utils.scss';
 
 .helper {
   font-weight: 100;

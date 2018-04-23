@@ -1,6 +1,6 @@
 <template>
-  <div id="layout-header">
-    <h1>Personal List</h1>
+  <div class="layout-header">
+    <h1>Todo List</h1>
   </div>
 </template>
 
@@ -8,10 +8,10 @@
 export default {}
 </script>
 
-<style lang="scss">
-@import '../common/style/utils.scss';
+<style lang="scss" scoped>
+@import '~scss/utils.scss';
 
-#layout-header {
+.layout-header {
   color: $color-full;
   h1 {
     font-size: 100px;

@@ -1,9 +1,13 @@
 const webpack = require('webpack')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.config')
+const config = require('../config')
 const merge = require('webpack-merge') // 合并设置
 const HtmlWebpackPlugin = require('html-webpack-plugin')  // 将打包好的 js 插入 HTML
 
+const createLocalIdentName = process.env.NODE_ENV === 'development'
+  ? '[path]-[name]-[hash:base64:5]'
+  : '[hash:base64:5]'
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -13,16 +17,25 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     rules: [{
       test: /\.scss$/,
-      include: [resolve('src')],
+      include: [resolve('client')],
       use: [ // 顺序重要
         'style-loader', // 将样式表写入 HTML 中
-        'css-loader',
+        // 'css-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            // CSS modules 模拟 scoped ，此处用于定义 .jsx 的样式作用域
+            //
+            modules: true,
+            localIdentName: createLocalIdentName
+          }
+        },
         {
           loader: 'postcss-loader',
           options: {
             sourceMap: true,
             config: {
-              path: './postcss.config.js'
+              path: './postcss.config.js' // 以项目根目录为基准
             }
           }
         },
@@ -35,16 +48,25 @@ module.exports = merge(baseWebpackConfig, {
     }]
   },
 
-  devtool: '#cheap-module-eval-source-map', // 有助于调试文件，sourceMap 会做代码映射，即编译打包后的代码和源代码相互映射
+  // 有助于调试文件，sourceMap 会做代码映射，即编译打包后的代码和源代码相互映射
+  devtool: config.dev.devtool, // 'cheap-module-eval-source-map'
 
   devServer: {
-    port: '8080', // 直接设置为 IP 在局域网的其他设备也能访问，设置为 localhost 则不行。访问方式为：访问本机局域网 IP + port。
-    host: '0.0.0.0',
-    overlay: { // 设置是否展示 编译时的错误
-      error: true,
-    },
-    hot: true // 只热加载（重渲染） 修改的模块
-    // open: true  启动本地服务器时，自动打开浏览器
+    host: config.dev.host,
+
+    // 直接设置为 IP 在局域网的其他设备也能访问，设置为 localhost 则不行。访问方式为：访问本机局域网 IP + port。
+    port: config.dev.port,
+
+    // 设置是否展示 编译时的错误
+    overlay: config.dev.errorOverlay
+      ? { warnings: false, errors: true }
+      : false,
+
+    // 只热加载（重渲染） 修改的模块
+    hot: true,
+
+    // 启动本地服务器时，自动打开浏览器
+    open: config.dev.autoOpenBrowser
   },
 
   plugins: [
@@ -55,7 +77,7 @@ module.exports = merge(baseWebpackConfig, {
      */
 
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env': require('../config/dev.env')
 
     }),
 
