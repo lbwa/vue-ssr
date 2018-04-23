@@ -20,6 +20,9 @@ before_install:
   - export CHROME_BIN=google-chrome
 
 install:
+  - npm i -g nrm
+  - nrm ls
+  - nrm use npm
   - yarn
   - yarn global add codecov
 
