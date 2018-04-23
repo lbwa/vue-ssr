@@ -1,13 +1,13 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
-import ContentHelper from '@/components/ContentHelper'
+import MainHelper from 'todo/MainHelper'
 
-describe('ContentHelper.vue', () => {
-  it('初始渲染 ContentHelper', () => {
-    const wrapper = mount(ContentHelper, {
+describe('MainHelper.vue', () => {
+  it('初始渲染 MainHelper', () => {
+    const wrapper = mount(MainHelper, {
       propsData: {
         selected: 'all',
-        leftNum: 1,
+        remainder: 1,
         showCompletedText: 'Clear Completed' // 按钮文字
       }
     })
@@ -18,11 +18,11 @@ describe('ContentHelper.vue', () => {
     expect(wrapper.find('.clear').exists()).to.equal(true)
   })
 
-  it('切换 tab 时的 ContentHelper 渲染 - toggleSelect', () => {
-    const wrapper = mount(ContentHelper, {
+  it('切换 tab 时的 MainHelper 渲染 - toggleSelect', () => {
+    const wrapper = mount(MainHelper, {
       propsData: {
         selected: 'all',
-        leftNum: 1,
+        remainder: 1,
         showCompletedText: 'Clear Completed'
       }
     })
@@ -45,11 +45,11 @@ describe('ContentHelper.vue', () => {
     expect(wrapper.emitted().userSelect[0].length).to.equal(1)
   })
 
-  it('显示条目中剔除 completed 项 - clearAllCompleted', () => {
-    const wrapper = mount(ContentHelper, {
+  it('剔除标记为 completed 项 - clearAllCompleted', () => {
+    const wrapper = mount(MainHelper, {
       propsData: {
         selected: 'all',
-        leftNum: 1,
+        remainder: 1,
         showCompletedText: 'Clear Completed'
       }
     })

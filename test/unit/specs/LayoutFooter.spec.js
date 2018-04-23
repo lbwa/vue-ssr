@@ -1,5 +1,5 @@
 // import Vue from 'vue'
-import LayoutFooter from '@/components/LayoutFooter'
+import LayoutFooter from 'layout/LayoutFooter'
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
@@ -9,7 +9,7 @@ import { expect } from 'chai'
 //     const vm = new Constructor().$mount()
 
 //     expect(vm.$el.querySelector('span').textContent)
-//       .to.contain('Written by lbwa')
+//       .to.contain('Written by Bowen')
 //   })
 // })
 
@@ -19,6 +19,6 @@ describe('LayoutFooter.vue', () => {
     const vm = wrapper.vm
 
     expect(vm.$el.querySelector('span').textContent)
-      .to.contain('Written by lbwa')
+      .to.contain('Written by Bowen')
   })
 })

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import LayoutHeader from '@/components/LayoutHeader'
+import LayoutHeader from 'layout/LayoutHeader'
 import { expect } from 'chai'
 
 describe('LayoutHeader.vue', () => {
@@ -8,6 +8,6 @@ describe('LayoutHeader.vue', () => {
     const vm = new Constructor().$mount()
 
     expect(vm.$el.querySelector('h1').textContent)
-      .to.contain('Personal List')
+      .to.contain('Todo List')
   })
 })

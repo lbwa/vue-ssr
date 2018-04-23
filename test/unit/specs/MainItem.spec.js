@@ -1,11 +1,11 @@
 // import { createTest, destroyVM } from '../util'
-import ContentItem from '@/components/ContentItem'
+import MainItem from 'todo/MainItem'
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
-describe('ContentItem.vue', () => {
+describe('MainItem.vue', () => {
   it('根据不同的 props 渲染 todo 单项', () => {
-    const vm = mount(ContentItem, {
+    const vm = mount(MainItem, {
       propsData: {
         item: {
           id: 0,
@@ -13,11 +13,11 @@ describe('ContentItem.vue', () => {
           completed: false,
           isDeleted: false
         },
-        checkStatu: true
+        checkStatus: true
       }
     }).vm
 
-    expect(vm.$el.querySelector('label').textContent)
+    expect(vm.$el.querySelector('.content-text').textContent)
       .to.contain('Test Content')
   })
 
@@ -26,7 +26,7 @@ describe('ContentItem.vue', () => {
    */
 
   it('测试点击 todo 单项事件 - refreshThisCompleted', done => {
-    const wrapper = mount(ContentItem, {
+    const wrapper = mount(MainItem, {
       propsData: {
         item: {
           id: 0,
@@ -34,7 +34,7 @@ describe('ContentItem.vue', () => {
           completed: false,
           isDeleted: false
         },
-        checkStatu: true
+        checkStatus: true
       }
     })
     const button = wrapper.find('.toggle')
@@ -54,7 +54,7 @@ describe('ContentItem.vue', () => {
         completed: true, // turn to true
         isDeleted: false
       },
-      checkStatu: true
+      checkStatus: true
     })
 
     // vue 是异步更新 DOM
@@ -66,7 +66,7 @@ describe('ContentItem.vue', () => {
   })
 
   it('删除 todo 单项事件 - destroyItem', () => {
-    const wrapper = mount(ContentItem, {
+    const wrapper = mount(MainItem, {
       propsData: {
         item: {
           id: 0,
@@ -74,7 +74,7 @@ describe('ContentItem.vue', () => {
           completed: false,
           isDeleted: false
         },
-        checkStatu: true
+        checkStatus: true
       }
     })
     const button = wrapper.find('button')

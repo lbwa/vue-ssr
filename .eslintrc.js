@@ -1,6 +1,7 @@
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
+  // root: true 找寻配置的最高级目录，即当前目录
   root: true,
   parserOptions: {
     parser: 'babel-eslint'

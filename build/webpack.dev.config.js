@@ -20,16 +20,7 @@ module.exports = merge(baseWebpackConfig, {
       include: [resolve('client')],
       use: [ // 顺序重要
         'style-loader', // 将样式表写入 HTML 中
-        // 'css-loader',
-        {
-          loader: 'css-loader',
-          options: {
-            // CSS modules 模拟 scoped ，此处用于定义 .jsx 的样式作用域
-            //
-            modules: true,
-            localIdentName: createLocalIdentName
-          }
-        },
+        'css-loader',
         {
           loader: 'postcss-loader',
           options: {

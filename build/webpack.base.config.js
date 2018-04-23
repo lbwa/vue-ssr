@@ -6,6 +6,21 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const createLintingRule = () => {
+  return {
+    test: /\.(js|vue)$/,
+    loader: 'eslint-loader',
+
+    // enforce: 'pre' 用于定义优先级，在其他 loader 调用之前，优先进行代码检查
+    enforce: 'pre',
+    include: [resolve('client'), resolve('test')],
+    options: {
+      formatter: require('eslint-friendly-formatter'),
+      emitWarning: !config.dev.showEslintErrorsInOverlay
+    }
+  }
+}
+
 module.exports = {
   target: 'web',
   context: path.resolve(__dirname, '../'), // 当配置文件不在根目录时，此处不可少，因为 webpack 默认从当前目录解析
@@ -13,7 +28,7 @@ module.exports = {
   output: {
     // 在生产环境中使用 chunkHash
     // 在开发环境中不能使用 chunkHash ，反之 webpack-dev-server 会报错
-    filename: 'bundle.[hash:8].js', 
+    filename: 'bundle.[hash:8].js',
     path: resolve('dist')
   },
   resolve: {
@@ -21,22 +36,14 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.runtime.esm.js',
       '@': resolve('client'),
-      'scss':resolve('client/common/scss')
+      'scss':resolve('client/common/scss'),
+      'layout': resolve('client/layout'),
+      'todo': resolve('client/views/todo')
     }
   },
   module: {
     rules: [
-      // eslint config
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
-        options: {
-          formatter: require('eslint-friendly-formatter'),
-          emitWarning: !config.dev.showEslintErrorsInOverlay
-        }
-      },
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
 
       /** 样式表在不同环境中使用的配置不同，具体体现在：在生产环境中，根据实际，一般要
        * 将 css 文件分离出打包的 .js，然后在头部引入。这样可以最优配置 http 请求。而
@@ -59,7 +66,7 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.( gif|jpg|jpeg|png|svg )$/,
+        test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [
           {  // url-loader 是基于 file-loader 的封装
             loader: 'url-loader',  // 将图转换成 base64 格式插入 js 中

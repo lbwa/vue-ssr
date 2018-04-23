@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
-import LayoutContent from '@/components/LayoutContent'
+import ContentMain from 'todo/ContentMain'
 
-describe('LayoutContent.vue', () => {
+describe('ContentMain.vue', () => {
   // addTodoItem
   it('Input box 文字输入事件 - addTodoItem', () => {
-    const wrapper = mount(LayoutContent)
+    const wrapper = mount(ContentMain)
     const vm = wrapper.vm
     const inputBox = wrapper.find('.add-item')
 
@@ -32,12 +32,12 @@ describe('LayoutContent.vue', () => {
    * 1. link: http://slides.com/mattoconnell/deck#/12
    * 2. 单元测试应注重接口，界面的测试，而不是测试具体的数据实现，这也是单元测试的最终
    * 极的目的，这是关注组件的展现结果，而不是实现过程，是为后期的拓展带来了更大扩展性。
-   * 3. 据以上原理，故不再测试 LayoutContent 中的 ContentItem 等子组件的渲染，这部分
+   * 3. 据以上原理，故不再测试 ContentMain 中的 ContentMain 等子组件的渲染，这部分
    * 测试在各自子组件测试配置中进行
    */
 
   it('刷新显示的 todo 单项 - refreshItems', () => {
-    const wrapper = mount(LayoutContent)
+    const wrapper = mount(ContentMain)
     const inputBox = wrapper.find('.add-item')
 
     inputBox.element.value = 'Test content'
@@ -51,14 +51,14 @@ describe('LayoutContent.vue', () => {
   })
 
   it('用户切换底部标签 - refreshSelect and filteredItems', () => {
-    const wrapper = mount(LayoutContent)
+    const wrapper = mount(ContentMain)
 
     wrapper.vm.refreshSelect('completed')
     expect(wrapper.vm.hasSelected).to.equal('completed')
   })
 
   it('过滤 hasCompleted 显示 - filteredItems', () => {
-    const wrapper = mount(LayoutContent)
+    const wrapper = mount(ContentMain)
     wrapper.setData({
       items: [{
         id: 0,
@@ -71,7 +71,7 @@ describe('LayoutContent.vue', () => {
   })
 
   it('处理用户点击 todo 单项的行为 - refreshItemCompleted', () => {
-    const wrapper = mount(LayoutContent)
+    const wrapper = mount(ContentMain)
     wrapper.setData({
       items: [{
         id: 0,
@@ -88,7 +88,7 @@ describe('LayoutContent.vue', () => {
   it('用户点击清除所有已完成的 todo 单项 - clearCompleted ', done => {
     // done() 是  Mocha 测试框架自带的判断异步过程的函数
     // https://vue-test-utils.vuejs.org/zh-cn/guides/testing-async-components.html
-    const wrapper = mount(LayoutContent)
+    const wrapper = mount(ContentMain)
     wrapper.setData({
       items: [{
         id: 0,

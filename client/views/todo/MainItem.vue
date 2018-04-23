@@ -1,7 +1,7 @@
 <template>
   <div class="content-item">
     <span class="toggle" @click="refreshThisCompleted()">
-      <i :class="[item.completed ? 'icon-ok' : 'icon-ok-outline']"></i>  
+      <i :class="[item.completed ? 'icon-ok' : 'icon-ok-outline']"></i>
     </span>
     <div :class="['item-content', item.completed ? 'completed' : '']">
       <span class="content-text">{{ item.content }}</span>
