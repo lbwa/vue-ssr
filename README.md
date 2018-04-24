@@ -1,13 +1,9 @@
 # vue-ssr
 
-> A Vue.js Server-Side Rendering example
+> A Vue.js Server-Side Rendering implementation
 
-<a href="https://travis-ci.org/lbwa/vue-ssr" target="_blank">
-  <img src="https://travis-ci.org/lbwa/vue-ssr.svg?branch=master"/>
-</a>
-<a href="https://codecov.io/gh/lbwa/vue-ssr" target="_blank">
-  <img src="https://codecov.io/gh/lbwa/vue-ssr/branch/master/graph/badge.svg" />
-</a>
+[![Build Status](https://travis-ci.org/lbwa/vue-ssr.svg?branch=master)](https://travis-ci.org/lbwa/vue-ssr)
+[![codecov](https://codecov.io/gh/lbwa/vue-ssr/branch/master/graph/badge.svg)](https://codecov.io/gh/lbwa/vue-ssr)
 
 ## Build Setup
 

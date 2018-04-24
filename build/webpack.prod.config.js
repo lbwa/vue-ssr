@@ -5,6 +5,7 @@ const config = require('../config')
 const utils = require('./utils')
 const merge = require('webpack-merge')  // 合并配置
 const HtmlWebpackPlugin = require('html-webpack-plugin')  // 将打包好的 js 插入 HTML
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // 打包分析工具
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -13,12 +14,12 @@ const env = process.env.NODE_ENV === 'testing'
 /**
  * 1. extract-text-webpack-plugin 该插件用于将样式表从 打包 js （这里指 output 中
  * 的 bundle.js）中分离出来单独打包成一个 css 文件，之后在头部单独引入。
- * 
+ *
  * 2. 2018.3.14 该插件暂只有通过  extract-text-webpack-plugin@next 安装4.0-beta.0
- * 版本以支持 webpack 4.0+。 
+ * 版本以支持 webpack 4.0+。
  * 正常安装将报错：DeprecationWarning: Tapable.plugin is deprecated. Use new API on `.hooks` instead。
  * 原因 https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/701
- * 
+ *
  */
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -28,6 +29,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 
+function useAnalyzerPlugin () {
+  return config.build.bundleAnalyzerReport ? [new BundleAnalyzerPlugin()] : []
+}
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -35,7 +40,7 @@ function resolve (dir) {
 module.exports = merge(baseWebpackConfig, {
   entry: {
     app: resolve('client/main.js'),
-    vendor: ['vue'] // 数组中的类库将单独打包成 vendor.xxx.js 
+    vendor: ['vue'] // 数组中的类库将单独打包成 vendor.xxx.js
   },
 
   output: {
@@ -72,6 +77,7 @@ module.exports = merge(baseWebpackConfig, {
   },
 
   plugins: [
+    ...useAnalyzerPlugin(),
 
     /**
      * 1.在业务代码中是不存在 Node 环境中的环境变量 process.env.NODE_ENV 的，所以 DefinePlugin 的作用就是在编译时向业务代码中注入环境变量
