@@ -71,6 +71,7 @@ export default {
     margin: auto 15px;
     border: 1px solid;
     border-radius: 50%;
+    color: #666;
     .icon-ok-outline, .icon-ok {
       display: inline-block;
       font-size: 16px;

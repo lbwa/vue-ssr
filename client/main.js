@@ -7,6 +7,11 @@ Vue.use(VueRouter)
 
 const router = createRouter()
 
+// 全局守卫
+router.beforeEach((to, from, next) => {
+  next()
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#root',
