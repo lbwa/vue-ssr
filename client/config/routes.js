@@ -1,6 +1,12 @@
 // routes 映射关系
-import ContentMain from 'todo/ContentMain'
-import Login from '@/views/login/Login'
+// import ContentMain from 'todo/ContentMain'
+// import Login from '@/views/login/Login'
+
+/**
+ * 路由懒加载(异步组件)
+ * 1. 为识别 import() 语法，需安装 babel-plugin-syntax-dynamic-import
+ * 2. 并在 .babelrc 配置使用插件 syntax-dynamic-import
+ */
 
 export default [
   {
@@ -9,16 +15,16 @@ export default [
   },
   {
     path: '/app',
-    component: ContentMain,
+    component: () => import('todo/ContentMain'),
 
     // 路由独享守卫
     beforeEnter (to, from, next) {
       console.log('%c App route before enter', 'color: dodgerblue')
       next()
-    },
+    }
 
     // 将会把匹配的动态片段当作 props 对象属性传递给匹配的组件
-    props: true // 另有对象和函数形式
+    // props: true // 另有对象和函数形式
 
     // 命名视图
     // components: {
@@ -28,6 +34,6 @@ export default [
   },
   {
     path: '/login',
-    component: Login
+    component: () => import('@/views/login/Login')
   }
 ]

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div class="cover"></div> <!-- 在 body 有背景图时，可调节背景图明暗的-->
+    <div class="cover"></div><!-- 在 body 有背景图时，可调节背景图明暗的-->
+    <router-link to="/app">app</router-link>
+    <router-link to="/login">login</router-link>
     <LayoutHeader/>
     <transition name="fade">
       <router-view/>
@@ -13,15 +15,15 @@
 <script>
 import LayoutHeader from '@/layout/LayoutHeader'
 import LayoutFooter from '@/layout/LayoutFooter'
-import ContentMain from '@/views/todo/ContentMain'
+// import ContentMain from '@/views/todo/ContentMain'
 
 export default {
   name: 'App',
 
   components: {
     LayoutHeader,
-    ContentMain,
     LayoutFooter
+    // ContentMain
   }
 }
 </script>
