@@ -56,6 +56,11 @@ module.exports = merge(baseWebpackConfig, {
     // 只热加载（重渲染） 修改的模块
     hot: true,
 
+    // 当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
+    historyApiFallback: {
+      index: '/public/index.html'
+    },
+
     // 启动本地服务器时，自动打开浏览器
     open: config.dev.autoOpenBrowser
   },
@@ -75,12 +80,12 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       // https://github.com/jantimon/html-webpack-plugin
       filename: 'index.html', // 输出 HTML 的文件名
-      template: 'index.html', // 模板文件
+      template: path.join(__dirname, 'template.html'), // 模板文件
       inject: true
     }), // 自动向 index.html 中插入 bundle.js
-    
+
     new webpack.HotModuleReplacementPlugin(),
-    
+
     new webpack.NoEmitOnErrorsPlugin()
   ]
 })

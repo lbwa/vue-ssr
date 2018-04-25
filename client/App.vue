@@ -2,7 +2,10 @@
   <div id="app">
     <div class="cover"></div> <!-- 在 body 有背景图时，可调节背景图明暗的-->
     <LayoutHeader/>
-    <ContentMain/>
+    <transition name="fade">
+      <router-view/>
+    </transition>
+    <!-- <ContentMain/> -->
     <LayoutFooter/>
   </div>
 </template>
@@ -23,7 +26,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~scss/utils.scss';
 
 #app {
@@ -33,12 +36,17 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-.cover {
-  @include position(absolute, 0, 0, 0, 0);
-  background: #808080;
-  opacity: .1;  // 此处调节透明度，可达到调节背景图明暗的目的
-  z-index: -1;
+  .cover {
+    @include position(absolute, 0, 0, 0, 0);
+    background: #808080;
+    opacity: .1;  // 此处调节透明度，可达到调节背景图明暗的目的
+    z-index: -1;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
 }
 </style>

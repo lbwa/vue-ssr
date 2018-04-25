@@ -102,7 +102,7 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       // https://github.com/jantimon/html-webpack-plugin
       filename: 'index.html',
-      template: 'index.html',
+      template: path.join(__dirname, 'template.html'),
       inject: true,
       minify: {
         removeComments: true,

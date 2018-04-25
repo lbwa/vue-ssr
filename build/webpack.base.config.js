@@ -29,7 +29,10 @@ module.exports = {
     // 在生产环境中使用 chunkHash
     // 在开发环境中不能使用 chunkHash ，反之 webpack-dev-server 会报错
     filename: 'bundle.[hash:8].js',
-    path: resolve('dist')
+    path: resolve('dist'),
+    publicPath: process.env.NODE_ENV === 'production'
+      ? config.build.assetsPublicPath
+      : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.jsx',  '.json'], // 自动解析确定的拓展名
