@@ -6,7 +6,7 @@ import routes from './routes'
 export default () => {
   return new Router({
     routes,
-    mode: 'history',
+    mode: 'history'
     // base: '/base/', // 路由基路径
 
     // 路由激活时链接的 class，如 '/link/...' 匹配时，将有多个连接（如 '/link/1' 和 '/link/2'）激活 linkActiveClass
@@ -16,14 +16,14 @@ export default () => {
     // linkExactActiveClass: 'exact-active-link',
 
     // 路由跳转后是否需要滚动到目标位置
-    scrollBehavior (to, from, savedPosition) {
-    // 在浏览过的路由路径中会将路由信息对象保存至 savedPosition
-      if (savedPosition) {
-        return savedPosition
-      } else {
-        return { x: 0, y: 0 }
-      }
-    }
+    // scrollBehavior (to, from, savedPosition) {
+    // // 在浏览过的路由路径中会将路由信息对象保存至 savedPosition
+    //   if (savedPosition) {
+    //     return savedPosition
+    //   } else {
+    //     return { x: 0, y: 0 }
+    //   }
+    // }
 
     // 定制 url 中 query 的解析函数，覆盖默认解析函数
     // parseQuery (query) {},

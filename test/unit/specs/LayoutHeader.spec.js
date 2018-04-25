@@ -3,7 +3,7 @@ import LayoutHeader from 'layout/LayoutHeader'
 import { expect } from 'chai'
 
 describe('LayoutHeader.vue', () => {
-  it('渲染 header', () => {
+  it('应该渲染 header', () => {
     const Constructor = Vue.extend(LayoutHeader)
     const vm = new Constructor().$mount()
 

@@ -1,10 +1,12 @@
+// import VueRouter from 'vue-router'
+// import { mount, createLocalVue } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 import ContentMain from 'todo/ContentMain'
 
 describe('ContentMain.vue', () => {
   // addTodoItem
-  it('Input box 文字输入事件 - addTodoItem', () => {
+  it('应该触发输入框输入事件 - addTodoItem', () => {
     const wrapper = mount(ContentMain)
     const vm = wrapper.vm
     const inputBox = wrapper.find('.add-item')
@@ -36,7 +38,7 @@ describe('ContentMain.vue', () => {
    * 测试在各自子组件测试配置中进行
    */
 
-  it('刷新显示的 todo 单项 - refreshItems', () => {
+  it('应该刷新显示的 todo 单项 - refreshItems', () => {
     const wrapper = mount(ContentMain)
     const inputBox = wrapper.find('.add-item')
 
@@ -50,14 +52,14 @@ describe('ContentMain.vue', () => {
     expect(wrapper.vm.items.length).to.equal(0)
   })
 
-  it('用户切换底部标签 - refreshSelect and filteredItems', () => {
+  it('应该切换底部标签 - refreshSelect and filteredItems', () => {
     const wrapper = mount(ContentMain)
 
     wrapper.vm.refreshSelect('completed')
     expect(wrapper.vm.hasSelected).to.equal('completed')
   })
 
-  it('过滤 hasCompleted 显示 - filteredItems', () => {
+  it('应该过滤 hasCompleted 显示 - filteredItems', () => {
     const wrapper = mount(ContentMain)
     wrapper.setData({
       items: [{
@@ -70,7 +72,7 @@ describe('ContentMain.vue', () => {
     })
   })
 
-  it('处理用户点击 todo 单项的行为 - refreshItemCompleted', () => {
+  it('应该切换 completed 状态 - refreshItemCompleted', () => {
     const wrapper = mount(ContentMain)
     wrapper.setData({
       items: [{
@@ -85,7 +87,7 @@ describe('ContentMain.vue', () => {
     expect(wrapper.vm.items[0].completed).to.equal(true)
   })
 
-  it('用户点击清除所有已完成的 todo 单项 - clearCompleted ', done => {
+  it('应该清除所有已完成的 todo 单项 - clearCompleted ', done => {
     // done() 是  Mocha 测试框架自带的判断异步过程的函数
     // https://vue-test-utils.vuejs.org/zh-cn/guides/testing-async-components.html
     const wrapper = mount(ContentMain)
@@ -111,3 +113,28 @@ describe('ContentMain.vue', () => {
     wrapper.vm.clearCompleted()
   })
 })
+
+// describe('ContentMain.vue - 路由守卫', () => {
+//   it('应该得到 vue 实例 - beforeRouteEnter', () => {
+//     window.confirm = function () {
+//       return true
+//     }
+//     const localVue = createLocalVue()
+//     localVue.use(VueRouter)
+
+//     const routes = [
+//       { path: '/app', component: ContentMain }
+//     ]
+//     const router = new VueRouter({
+//       routes
+//     })
+
+//     const wrapper = mount(ContentMain, {
+//       localVue,
+//       router
+//     })
+
+//     wrapper.vm.$router.push({path: '/app'})
+//     console.log(wrapper.vm.$route.fullPath)
+//   })
+// })

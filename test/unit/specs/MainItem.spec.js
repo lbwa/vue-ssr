@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils'
 import { expect } from 'chai'
 
 describe('MainItem.vue', () => {
-  it('根据不同的 props 渲染 todo 单项', () => {
+  it('应该根据不同的 props 渲染 todo 单项', () => {
     const vm = mount(MainItem, {
       propsData: {
         item: {
@@ -25,7 +25,7 @@ describe('MainItem.vue', () => {
    * 在测试环境中，vue 组件不会监听任何事件，若有 watcher，需要手动触发。
    */
 
-  it('测试点击 todo 单项事件 - refreshThisCompleted', done => {
+  it('应该触发点击 todo 单项事件 - refreshThisCompleted', done => {
     const wrapper = mount(MainItem, {
       propsData: {
         item: {
@@ -65,7 +65,7 @@ describe('MainItem.vue', () => {
     })
   })
 
-  it('删除 todo 单项事件 - destroyItem', () => {
+  it('应该删除 todo 单项 - destroyItem', () => {
     const wrapper = mount(MainItem, {
       propsData: {
         item: {

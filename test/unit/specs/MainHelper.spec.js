@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import MainHelper from 'todo/MainHelper'
 
 describe('MainHelper.vue', () => {
-  it('初始渲染 MainHelper', () => {
+  it('应该渲染 MainHelper', () => {
     const wrapper = mount(MainHelper, {
       propsData: {
         selected: 'all',
@@ -18,7 +18,7 @@ describe('MainHelper.vue', () => {
     expect(wrapper.find('.clear').exists()).to.equal(true)
   })
 
-  it('切换 tab 时的 MainHelper 渲染 - toggleSelect', () => {
+  it('应该在切换 tab 后渲染 MainHelper - toggleSelect', () => {
     const wrapper = mount(MainHelper, {
       propsData: {
         selected: 'all',
@@ -45,7 +45,7 @@ describe('MainHelper.vue', () => {
     expect(wrapper.emitted().userSelect[0].length).to.equal(1)
   })
 
-  it('剔除标记为 completed 项 - clearAllCompleted', () => {
+  it('应该剔除标记为 completed 项 - clearAllCompleted', () => {
     const wrapper = mount(MainHelper, {
       propsData: {
         selected: 'all',

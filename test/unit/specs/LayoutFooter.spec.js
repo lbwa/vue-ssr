@@ -14,7 +14,7 @@ import { expect } from 'chai'
 // })
 
 describe('LayoutFooter.vue', () => {
-  it('渲染 footer', () => {
+  it('应该渲染 footer', () => {
     const wrapper = mount(LayoutFooter)
     const vm = wrapper.vm
 
