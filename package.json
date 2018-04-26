@@ -17,6 +17,10 @@
   "author": "lbwa <mr_lbw@outlook.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
+    "ejs": "^2.5.9",
+    "koa": "^2.5.0",
+    "koa-router": "^7.4.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vue-server-renderer": "^2.5.16"
@@ -57,6 +61,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "^0.0.32",
     "karma-webpack": "^3.0.0",
+    "memory-fs": "^0.4.1",
     "mocha": "^5.1.1",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.1.1",

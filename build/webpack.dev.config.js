@@ -4,6 +4,7 @@ const baseWebpackConfig = require('./webpack.base.config')
 const config = require('../config')
 const merge = require('webpack-merge') // 合并设置
 const HtmlWebpackPlugin = require('html-webpack-plugin')  // 将打包好的 js 插入 HTML
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 
 const createLocalIdentName = process.env.NODE_ENV === 'development'
   ? '[path]-[name]-[hash:base64:5]'
@@ -83,6 +84,10 @@ module.exports = merge(baseWebpackConfig, {
       template: path.join(__dirname, 'template.html'), // 模板文件
       inject: true
     }), // 自动向 index.html 中插入 bundle.js
+
+    // 服务器需要服务器 bundle 然后用于服务器端渲染(SSR)，而客户端 bundle 会发送给浏览器，用于混合静态标记。
+    // 此插件在输出目录中生成 vue-ssr-client-manifest.json，即客户端 bundle，或称客户端构建清单（clientManifest）
+    new VueClientPlugin(),
 
     new webpack.HotModuleReplacementPlugin(),
 
