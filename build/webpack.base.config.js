@@ -24,7 +24,7 @@ const createLintingRule = () => {
 module.exports = {
   target: 'web',
   context: path.resolve(__dirname, '../'), // 当配置文件不在根目录时，此处不可少，因为 webpack 默认从当前目录解析
-  entry: resolve('client/main.js'),
+  entry: resolve('client/client-entry.js'),
   output: {
     // 在生产环境中使用 chunkHash
     // 在开发环境中不能使用 chunkHash ，反之 webpack-dev-server 会报错

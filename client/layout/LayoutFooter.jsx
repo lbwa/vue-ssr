@@ -9,9 +9,9 @@ export default {
 
   render (h) {
     return (
-      <div class="layout-footer">
+      <footer class="layout-footer">
         <span>Written by <a href="https://github.com/lbwa" target="_blank" >{this.author}</a></span>
-      </div>
+      </footer>
     )
   }
 }

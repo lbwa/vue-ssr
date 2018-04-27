@@ -39,7 +39,7 @@ function resolve (dir) {
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    app: resolve('client/main.js'),
+    app: resolve('client/client-entry.js'),
     vendor: ['vue'] // 数组中的类库将单独打包成 vendor.xxx.js
   },
 

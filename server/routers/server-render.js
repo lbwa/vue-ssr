@@ -21,6 +21,8 @@ module.exports = async (ctx, renderer, template) => {
     // 向 context 对象添加 context.renderStyles() 等方法
     const appString = await renderer.renderToString(context)
 
+    const { title } = context.meta.inject()
+
     /**
      * ejs.render(str, data, options) 返回一个 Rendered HTML string
      * ejs API:https://github.com/mde/ejs
@@ -42,7 +44,9 @@ module.exports = async (ctx, renderer, template) => {
        * 1. context.renderScripts() 返回引导客户端应用所需的 <script> 标签
        * 2. 需要 clientManifest，即客户端 bundle
        */
-      scripts: context.renderScripts()
+      scripts: context.renderScripts(),
+
+      title: title.text()
     })
 
     // 替换渲染上下文的 body 部分，原本为 dev-ssr 中的 '加载中...' 字样

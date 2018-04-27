@@ -1,5 +1,5 @@
 <template>
-  <div class="content-main">
+  <section class="content-main">
     <input
       type="text"
       class="add-item"
@@ -22,7 +22,7 @@
       @userSelect="refreshSelect"
       @clearCompleted="clearCompleted"
     />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -32,6 +32,10 @@ import MainHelper from './MainHelper'
 let id = 0 // 配置新建 item 的索引
 
 export default {
+  metaInfo: {
+    title: 'Bowen\'s Todo App'
+  },
+
   data () {
     return {
       items: [], // 所有条目的容器

@@ -1,7 +1,7 @@
 <template>
-  <div class="layout-header">
+  <header class="layout-header">
     <h1>Todo List</h1>
-  </div>
+  </header>
 </template>
 
 <script>

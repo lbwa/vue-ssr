@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import vuex from 'vuex'
+import Meta from 'vue-meta'
 
 import App from './app.vue'
 import createRouter from './config/router'
@@ -10,6 +11,7 @@ import createRouter from './config/router'
 
 Vue.use(VueRouter)
 // Vue.use(vuex)
+Vue.use(Meta)
 
 export default () => {
   const router = createRouter()
