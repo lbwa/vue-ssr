@@ -67,7 +67,8 @@ module.exports = merge(baseWebpackConfig, {
 
   plugins: [
     // 传入字符串可指定生成文件名
-    ...(process.env.NODE_ENV === 'development' ? [new VueServerPlugin()] : []),
+    // ...(process.env.NODE_ENV === 'development' ? [new VueServerPlugin()] : []),
+    new VueServerPlugin(),
 
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

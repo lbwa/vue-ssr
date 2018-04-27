@@ -1,6 +1,5 @@
 // https://github.com/vuejs-templates/webpack/blob/master/docs/static.md
-// $base-path: "~@/common/font";
-$base-path: "/client/common/font";
+$base-path: "~@/common/font";
 
 .icon-ok-outline:before { content: '\e801'; }
 .icon-ok:before { content: '\e802'; }
