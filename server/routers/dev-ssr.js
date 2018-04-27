@@ -78,6 +78,8 @@ const handleSSR = async (ctx) => {
   // 获取客户端构建清单，即客户端 bundle（另一个 server 的数据）
   // vue-ssr-client-manifest.json 是 webpack.dev.config 中 VueClientPlugin 默认生成文件名
   const clientManifestResp = await axios.get(
+    // http://koajs.com/#context
+    // 因为 Koa 将 Node request 对象封装至 ctx 上，所以此处 ctx 对象被赋予了请求地址，即此时存在了 ctx.path(ctx.request.path 的别名)
     'http://127.0.0.1:8080/public/vue-ssr-client-manifest.json'
   )
 
