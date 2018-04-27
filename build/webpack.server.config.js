@@ -1,5 +1,5 @@
 /**
- * 服务器配置
+ * SSR 服务器配置
  * 1. 用于生成传递给 createBundleRenderer 的服务器 bundle（'server/routers/dev-ssr'）
  * 2. 服务器需要服务器 bundle 然后用于服务器端渲染(SSR)。客户端 bundle 会发送给浏览
  * 器，用于混合静态标记。

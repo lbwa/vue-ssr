@@ -8,6 +8,7 @@
     "build": "npm run clean && npm run build:client",
     "analyze": "npm run clean && cross-env NODE_ENV=production  npm_config_report=true webpack --progress --config build/webpack.prod.config.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.config.js",
+    "server": "cross-env NODE_ENV=development node server/server.js",
     "start": "npm run dev",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "lint": "./node_modules/.bin/eslint --ext .js,.vue,.jsx client/",
@@ -21,6 +22,7 @@
     "ejs": "^2.5.9",
     "koa": "^2.5.0",
     "koa-router": "^7.4.0",
+    "koa-send": "^4.1.3",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vue-server-renderer": "^2.5.16"

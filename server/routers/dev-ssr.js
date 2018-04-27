@@ -1,3 +1,5 @@
+// 整合客户端 bundle（clientManifest）和服务端 bundle 以用于 ejs 渲染
+
 const Router = require('koa-router')
 const axios = require('axios')
 const path = require('path')
@@ -28,6 +30,7 @@ const serverCompiler = webpack(serverConfig)
 const mfs = new MemoryFS()
 serverCompiler.outputFileSystem = mfs
 
+// server bundle
 let bundle
 
 /**
@@ -62,21 +65,23 @@ serverCompiler.watch({/* watch options */}, (err, stats) => {
   )
 
   bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
+  console.log('New server bundle has been created')
 })
 
 const handleSSR = async (ctx) => {
-  // 第一次打包时，因为速度慢,执行至此时,没有 bundle
+  // 第一次打包时，因为速度原因，执行至此的时候,bundle 仍在构建中
   if (!bundle) {
     ctx.body = '加载中...'
     return
   }
 
-  // 获取客户端构建清单（另一个 server 的数据）
+  // 获取客户端构建清单，即客户端 bundle（另一个 server 的数据）
   // vue-ssr-client-manifest.json 是 webpack.dev.config 中 VueClientPlugin 默认生成文件名
   const clientManifestResp = await axios.get(
-    'http://127.0.0.1:8080/vue-ssr-client-manifest.json'
+    'http://127.0.0.1:8080/public/vue-ssr-client-manifest.json'
   )
 
+  // 在 await resolved 后，即得到 clientManifestResp，继续执行
   const clientManifest = clientManifestResp.data
 
   /**
@@ -112,11 +117,19 @@ const handleSSR = async (ctx) => {
        */
     })
 
-  // 渲染得到的客户端构建信息、服务器 bundle 和 HTML 页面包裹器（模板）
+  // 渲染得到的 renderer (客户端构建信息、服务器 bundle) 和 HTML 页面包裹器（模板）
+  // 最后返回用户看到的 HTML 页面
   await serverRender(ctx, renderer, template)
 }
 
 const router = new Router()
+
+/**
+ * 监听所有请求，并设置 handleSSR 为处理请求的回调函数
+ * 1. 特别地，会向回调中传入 context ，并作为接收器使用，即作为渲染上下文使用。
+ * 2. context 对象将被赋予各种属性，这些属性即是请求将要返回的数据，即渲染所需的信息
+ * https://github.com/alexmingoia/koa-router#module_koa-router--Router+get%7Cput%7Cpost%7Cpatch%7Cdelete%7Cdel
+ */
 router.get('*', handleSSR)
 
-module.export = router
+module.exports = router
