@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 // import vuex from 'vuex'
 import Meta from 'vue-meta'
 
-import App from './app.vue'
+import App from '@/App'
 import createRouter from './config/router'
 // import createStore from './store/store'
 
