@@ -3,9 +3,9 @@
 const Koa = require('koa')
 const send = require('koa-send')
 const path = require('path')
-const app = new Koa()
-
 const staticRouter = require('./routers/static')
+
+const app = new Koa()
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -42,7 +42,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-// 必须在 pageRouter 之前调用
+// 在生产环境中，访问静态资源的路由。它必须在 pageRouter 之前调用
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 
 const pageRouter = isDev
@@ -50,7 +50,7 @@ const pageRouter = isDev
   : require('./routers/ssr')
 
 /**
- * 1. 在上游中间件调用 next() 之后执行
+ * 1. 在上游中间件调用 next() 之后执行，同时上游中间件的执行暂停
  * 2. 此处调用的是 koa-router 中间件
  * 3. routes() 返回路径匹配的路由中间件
  * 4. allowedMethods(options) 返回一个单独的中间件。它用于根据 options 设置来响应请

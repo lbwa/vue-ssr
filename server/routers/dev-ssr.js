@@ -15,7 +15,7 @@ const serverRender = require('./server-render')
 const serverConfig = require('../../build/webpack.server.config')
 
 /**
- * 得到一个 webpack 编译器实例（webpack compiler）
+ * 得到一个 webpack 编译器实例（webpack compiler），返回一个重新打包的 服务器 bundle
  * 1. webpack({ 配置对象 })
  * 2. 当传入第二个参数，一个回调函数，就会执行 webpack compiler
  * https://doc.webpack-china.org/api/node/
