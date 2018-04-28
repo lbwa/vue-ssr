@@ -6,6 +6,7 @@ const utils = require('./utils')
 const merge = require('webpack-merge')  // 合并配置
 const HtmlWebpackPlugin = require('html-webpack-plugin')  // 将打包好的 js 插入 HTML
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // 打包分析工具
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -78,6 +79,8 @@ module.exports = merge(baseWebpackConfig, {
 
   plugins: [
     ...useAnalyzerPlugin(),
+
+    new VueClientPlugin(),
 
     /**
      * 1.在业务代码中是不存在 Node 环境中的环境变量 process.env.NODE_ENV 的，所以 DefinePlugin 的作用就是在编译时向业务代码中注入环境变量
