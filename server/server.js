@@ -3,10 +3,9 @@
 const Koa = require('koa')
 const send = require('koa-send')
 const path = require('path')
-
-const pageRouter = require('./routers/dev-ssr')
-
 const app = new Koa()
+
+const staticRouter = require('./routers/static')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -43,6 +42,13 @@ app.use(async (ctx, next) => {
   }
 })
 
+// 必须在 pageRouter 之前调用
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
+const pageRouter = isDev
+  ? require('./routers/dev-ssr')
+  : require('./routers/ssr')
+
 /**
  * 1. 在上游中间件调用 next() 之后执行
  * 2. 此处调用的是 koa-router 中间件
@@ -55,7 +61,7 @@ app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 // 在所有中间件调用完成后执行
 const HOST = process.env.HOST || '0.0.0.0'
-const PORT = process.env.PORT || 2333
+const PORT = process.env.PORT || 3333
 
 app.listen(PORT, HOST, () => {
   console.log(`Render server is listening on ${HOST}:${PORT}`)

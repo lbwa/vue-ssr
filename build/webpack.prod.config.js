@@ -45,7 +45,8 @@ module.exports = merge(baseWebpackConfig, {
   },
 
   output: {
-    filename: '[name].[chunkHash:8].js'
+    filename: '[name].[chunkHash:8].js',
+    publicPath: '/public/'
   },
 
   module: {

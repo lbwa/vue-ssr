@@ -11,11 +11,11 @@
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.config.js",
     "dev:server": "nodemon server/server.js",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "start": "npm run dev",
+    "start": "cross-env NODE_ENV=production node server/server.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "lint": "./node_modules/.bin/eslint --ext .js,.vue,.jsx client/",
     "lint-fix": "./node_modules/.bin/eslint --fix --ext .js,.vue,.jsx client/",
-    "clean": "rimraf dist && rimraf server-build"
+    "clean": "rimraf public && rimraf server-build"
   },
   "author": "lbwa <mr_lbw@outlook.com>",
   "license": "MIT",
