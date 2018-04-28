@@ -61,7 +61,7 @@ app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 // 在所有中间件调用完成后执行
 const HOST = process.env.HOST || '0.0.0.0'
-const PORT = process.env.PORT || 3333
+const PORT = process.env.PORT || 8889
 
 app.listen(PORT, HOST, () => {
   console.log(`Render server is listening on ${HOST}:${PORT}`)

@@ -49,6 +49,8 @@ module.exports = merge(baseWebpackConfig, {
     // 直接设置为 IP 在局域网的其他设备也能访问，设置为 localhost 则不行。访问方式为：访问本机局域网 IP + port。
     port: config.dev.port,
 
+    headers: { 'Access-Control-Allow-Origin': '*' },
+
     // 设置是否展示 编译时的错误
     overlay: config.dev.errorOverlay
       ? { warnings: false, errors: true }

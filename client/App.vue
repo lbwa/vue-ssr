@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <div class="cover"></div><!-- 在 body 有背景图时，可调节背景图明暗的-->
-    <router-link to="/app">app</router-link>
-    <router-link to="/login">login</router-link>
     <LayoutHeader/>
     <transition name="fade">
       <router-view/>
     </transition>
-    <!-- <ContentMain/> -->
+    <button @click="testNotify">click me</button>
+    <!-- <notification content="Test notification"/> -->
     <LayoutFooter/>
   </div>
 </template>
@@ -15,15 +14,29 @@
 <script>
 import LayoutHeader from '@/layout/LayoutHeader'
 import LayoutFooter from '@/layout/LayoutFooter'
-// import ContentMain from '@/views/todo/ContentMain'
 
 export default {
   name: 'App',
 
+  // mounted () {
+  //   this.$notify({
+  //     content: 'text $notify',
+  //     btn: 'close'
+  //   })
+  // },
+
+  methods: {
+    testNotify () {
+      this.$notify({
+        content: 'text $notify',
+        btn: 'close'
+      })
+    }
+  },
+
   components: {
     LayoutHeader,
     LayoutFooter
-    // ContentMain
   }
 }
 </script>
@@ -43,12 +56,6 @@ export default {
     background: #808080;
     opacity: .1;  // 此处调节透明度，可达到调节背景图明暗的目的
     z-index: -1;
-  }
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
-  }
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
   }
 }
 </style>
