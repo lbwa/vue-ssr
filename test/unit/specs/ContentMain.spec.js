@@ -52,13 +52,6 @@ describe('ContentMain.vue', () => {
     expect(wrapper.vm.items.length).to.equal(0)
   })
 
-  it('应该切换底部标签 - refreshSelect and filteredItems', () => {
-    const wrapper = mount(ContentMain)
-
-    wrapper.vm.refreshSelect('completed')
-    expect(wrapper.vm.hasSelected).to.equal('completed')
-  })
-
   it('应该过滤 hasCompleted 显示 - filteredItems', () => {
     const wrapper = mount(ContentMain)
     wrapper.setData({
