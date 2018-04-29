@@ -30,6 +30,10 @@ export default {
     }
   },
 
+  mounted () {
+    this.$parent.panes.push(this)
+  },
+
   render () {
     const tab = this.$slots.label || <span>{this.label}</span>
     const classNames = {

@@ -1,20 +1,27 @@
 <template>
   <section class="content-main">
-    <nav class="tabs-container">
-      <tabs :value="setIndex" @changeTab="handleChangeTab">
-        <tab label="all" index="1"></tab>
-        <tab label="active" index="2"></tab>
-        <tab index="3">
-          <span slot="completed"></span>
+    <div class="tabs-container">
+      <tabs :value="hasSelected" @changeTab="handleChangeTab">
+        <tab
+          :label="tab"
+          :index="tab"
+          v-for="tab in stats"
+          :key="tab"
+        >
+          <!-- <span>all content</span> -->
         </tab>
+        <!-- 有内容的 tab 用法 -->
+        <!-- <tab index="3">
+          <span slot="completed"></span>
+        </tab> -->
       </tabs>
-    </nav>
+    </div>
 
     <input
       type="text"
       class="add-item"
       autofocus
-      placeholder="What needs to be done ?"
+      placeholder="来写下你的计划吧 ！！"
       @keyup.enter="addTodoItem"
     />
 
@@ -31,7 +38,6 @@
       :selected="hasSelected"
       :remainder="remainder"
       :showCompletedText="completedText"
-      @userSelect="refreshSelect"
       @clearCompleted="clearCompleted"
     />
   </section>
@@ -55,7 +61,7 @@ export default {
       completedText: 'Clear Completed',
       checkStatus: false,
       timer: 0,
-      setIndex: '1'
+      stats: ['all', 'active', 'completed']
     }
   },
 
@@ -82,7 +88,7 @@ export default {
 
   methods: {
     handleChangeTab (index) {
-      this.setIndex = index
+      this.hasSelected = index
     },
 
     addTodoItem (e) {
@@ -103,10 +109,6 @@ export default {
       this.items = this.items.filter(item => {
         return !item.isDeleted
       })
-    },
-
-    refreshSelect (status) {
-      this.hasSelected = status
     },
 
     refreshItemCompleted (item) {

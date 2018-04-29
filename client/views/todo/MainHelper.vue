@@ -1,16 +1,16 @@
 <template>
-  <div class="helper">
+  <nav class="helper">
     <span class="helper-left">{{ remainder }} items left</span>
-    <span class="helper-buttons">
-      <span
+    <!-- <ul class="helper-buttons">
+      <li
       v-for=" item of status"
       :key="item"
       :class="[item, selected === item ? 'activated' : '']"
       @click="toggleSelect(item)"
-      >{{ item }}</span>
-    </span>
+      >{{ item }}</li>
+    </ul> -->
     <span class="clear" @click="clearAllCompleted">{{ showCompletedText }}</span>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -30,21 +30,21 @@ export default {
     }
   },
 
-  data () {
-    return {
-      status: ['all', 'active', 'completed']
-    }
-  },
-
   methods: {
-    toggleSelect (item) {
-      this.$emit('userSelect', item)
-    },
-
     clearAllCompleted () {
       this.$emit('clearCompleted')
     }
+
+    // toggleSelect (item) {
+    //   this.$emit('userSelect', item)
+    // }
   }
+
+  // data () {
+  //   return {
+  //     status: ['all', 'active', 'completed']
+  //   }
+  // },
 }
 </script>
 
@@ -81,26 +81,22 @@ export default {
   }
 }
 
-.helper-buttons {
-  width: 200px;
-  display: flex;
-  justify-content: space-around;
-  * {
-    display: inline-block;
-    padding: 0 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0);
-    &.activated {
-      border-color: rgba(0, 0, 0, 0.5);
-    }
-    &:hover {
-      border: 1px solid rgba(0, 0, 0, 0.2);
-    }
-    &:active {
-      border: 1px solid rgba(0, 0, 0, 0.5);
-    }
-  }
-}
+// .helper-buttons {
+//   width: 200px;
+//   display: flex;
+//   justify-content: space-around;
+//   margin: 0;
+//   padding: 0;
+//   .all, .active, .completed {
+//     display: inline-block;
+//     padding: 0 10px;
+//     cursor: pointer;
+//     border-radius: 5px;
+//     border: 1px solid rgba(0, 0, 0, 0);
+//     &.activated {
+//       border-color: rgba(0, 0, 0, 0.5);
+//     }
+//   }
+// }
 
 </style>

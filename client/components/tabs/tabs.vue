@@ -1,4 +1,6 @@
 <script>
+import TabContainer from './tab-container'
+
 export default {
   name: 'Tabs',
 
@@ -27,14 +29,26 @@ export default {
     }
   },
 
+  data () {
+    return {
+      panes: []
+    }
+  },
+
+  // 通过 props 属性(panes)来使得 插槽内容(this.panes) 达到响应式的效果
   render () {
     return (
-      <div class="tabs">
+      <nav class="tabs">
         <ul class="tabs-header">
           {this.$slots.default}
         </ul>
-      </div>
+        <tab-container panes={this.panes}></tab-container>
+      </nav>
     )
+  },
+
+  components: {
+    TabContainer
   }
 }
 </script>
