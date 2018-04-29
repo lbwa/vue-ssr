@@ -1,12 +1,12 @@
 <template>
   <section class="content-main">
     <nav class="tabs-container">
-      <tabs value="1">
-        <tab label="tab1" index="1"></tab>
-        <tab index="2">
-          <span slot="label" style="color: red">tab123</span>
+      <tabs :value="setIndex" @changeTab="handleChangeTab">
+        <tab label="all" index="1"></tab>
+        <tab label="active" index="2"></tab>
+        <tab index="3">
+          <span slot="completed"></span>
         </tab>
-        <tab label="tab3" index="3"></tab>
       </tabs>
     </nav>
 
@@ -54,7 +54,8 @@ export default {
       hasSelected: 'all', // 当前用户选择的项 all/active/completed
       completedText: 'Clear Completed',
       checkStatus: false,
-      timer: 0
+      timer: 0,
+      setIndex: '1'
     }
   },
 
@@ -80,6 +81,10 @@ export default {
   },
 
   methods: {
+    handleChangeTab (index) {
+      this.setIndex = index
+    },
+
     addTodoItem (e) {
       if (!e.target.value) {
         return

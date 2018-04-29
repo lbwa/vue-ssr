@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'tab',
+  name: 'Tab',
 
   props: {
     index: {
@@ -14,9 +14,19 @@ export default {
     }
   },
 
+  // inject: ['value'],
+
   computed: {
     active () {
-      return false
+      // 弊端：this.$parent 将父子组件紧紧耦合在一起了
+      // 解决方案：provide / inject 选项
+      return this.$parent.value === this.index
+    }
+  },
+
+  methods: {
+    handleClick () {
+      this.$parent.updateIndex(this.index)
     }
   },
 
@@ -28,7 +38,7 @@ export default {
     }
 
     return (
-      <li class={classNames}>
+      <li class={classNames} on-click={this.handleClick}>
         {tab}
       </li>
     )
@@ -41,7 +51,7 @@ export default {
 
 .tab {
   display: inline-block;
-  margin: 0 10px;
+  padding: 0 10px;
   cursor: pointer;
   &.active {
     border-bottom: 2px solid red;
