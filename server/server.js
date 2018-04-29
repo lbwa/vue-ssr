@@ -4,6 +4,11 @@ const Koa = require('koa')
 const send = require('koa-send')
 const path = require('path')
 const staticRouter = require('./routers/static')
+const apiRouter = require('./routers/api')
+const createDb = require('./db/db')
+const config = require('../app.config')
+
+const db = createDb(config.db.appId, config.db.appKey)
 
 const app = new Koa()
 
@@ -35,6 +40,11 @@ app.use(async (ctx, next) => {
 })
 
 app.use(async (ctx, next) => {
+  ctx.db = db
+  await next()
+})
+
+app.use(async (ctx, next) => {
   if (ctx.path === '/favicon.ico') {
     await send(ctx, '/favicon.ico', { root: path.join(__dirname, '../') })
   } else {
@@ -44,6 +54,8 @@ app.use(async (ctx, next) => {
 
 // 在生产环境中，访问静态资源的路由。它必须在 pageRouter 之前调用
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
+app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
 const pageRouter = isDev
   ? require('./routers/dev-ssr')

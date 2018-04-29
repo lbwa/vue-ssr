@@ -41,7 +41,8 @@ module.exports = {
       '@': resolve('client'),
       'scss':resolve('client/common/scss'),
       'layout': resolve('client/layout'),
-      'todo': resolve('client/views/todo')
+      'todo': resolve('client/views/todo'),
+      'components': resolve('client/components')
     }
   },
   module: {

@@ -7,7 +7,7 @@
     <transition name="fade">
       <router-view/>
     </transition>
-    <button @click="testNotify">click me</button>
+    <!-- <button @click="testNotify">click me</button> -->
     <!-- <notification content="Test notification"/> -->
     <LayoutFooter/>
   </div>
@@ -20,21 +20,21 @@ import LayoutFooter from '@/layout/LayoutFooter'
 export default {
   name: 'App',
 
-  // mounted () {
-  //   this.$notify({
-  //     content: 'text $notify',
-  //     btn: 'close'
-  //   })
-  // },
-
-  methods: {
-    testNotify () {
-      this.$notify({
-        content: 'text $notify',
-        btn: 'close'
-      })
-    }
+  mounted () {
+    this.$notify({
+      content: 'text $notify',
+      btn: 'close'
+    })
   },
+
+  // methods: {
+  //   testNotify () {
+  //     this.$notify({
+  //       content: 'text $notify',
+  //       btn: 'close'
+  //     })
+  //   }
+  // },
 
   components: {
     LayoutHeader,

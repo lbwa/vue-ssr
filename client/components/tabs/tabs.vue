@@ -25,6 +25,8 @@ export default {
   methods: {
     updateIndex (index) {
       // 基于 props 与 基础展示组件 的定位，不能在 tabs 组件内修改 value 值
+      // 由子组件 tab 调用
+      // TODO: 解耦父子组件是不是更好？
       this.$emit('changeTab', index)
     }
   },

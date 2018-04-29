@@ -8,9 +8,9 @@
           v-for="tab in stats"
           :key="tab"
         >
+          <!-- 有内容的 tab 用法 -->
           <!-- <span>all content</span> -->
         </tab>
-        <!-- 有内容的 tab 用法 -->
         <!-- <tab index="3">
           <span slot="completed"></span>
         </tab> -->
