@@ -1,9 +1,11 @@
 <template>
-  <transition name="fade">
+  <transition name="fade" @after-leave="afterLeave" @after-enter="afterEnter">
     <div
       class="notification"
       :style="style"
       v-show="visible"
+      @mouseenter="clearTimer"
+      @mouseleave="createTimer"
     >
       <span class="content">{{content}}</span>
       <a
@@ -38,7 +40,19 @@ export default {
   methods: {
     handleClick (evt) {
       this.$emit('close')
-    }
+    },
+
+    afterLeave () {
+      this.$emit('closed')
+    },
+
+    // fn-notification.js 中定义以下方法
+
+    afterEnter () {},
+
+    clearTimer () {},
+
+    createTimer () {}
   },
 
   data () {
@@ -77,6 +91,6 @@ export default {
   opacity: 0;
 }
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity .5s;
 }
 </style>
