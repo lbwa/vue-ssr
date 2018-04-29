@@ -9,6 +9,7 @@ import App from '@/App'
 import createRouter from './config/router'
 // import createStore from './store/store'
 import Notification from './components/notification'
+import Tabs from './components/tabs'
 
 import 'scss/global.scss'
 
@@ -16,8 +17,9 @@ Vue.use(VueRouter)
 // Vue.use(vuex)
 Vue.use(Meta)
 
-// 将 Notification 组件注册为全局组件。可在任意组件内调用
+// 将自定义组件注册为全局组件。可在任意组件内调用
 Vue.use(Notification)
+Vue.use(Tabs)
 
 export default () => {
   const router = createRouter()

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div class="cover"></div><!-- 在 body 有背景图时，可调节背景图明暗的-->
+
     <LayoutHeader/>
+
     <transition name="fade">
       <router-view/>
     </transition>
@@ -53,8 +55,8 @@ export default {
   // margin-top: 60px;
   .cover {
     @include position(absolute, 0, 0, 0, 0);
-    background: #808080;
-    opacity: .1;  // 此处调节透明度，可达到调节背景图明暗的目的
+    background: #666;
+    opacity: 0.01;  // 此处调节透明度，可达到调节背景图明暗的目的
     z-index: -1;
   }
 }

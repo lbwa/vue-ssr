@@ -3044,10 +3044,6 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/flatten/download/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@^0.71.0:
-  version "0.71.0"
-  resolved "http://registry.npm.taobao.org/flow-bin/download/flow-bin-0.71.0.tgz#fd1b27a6458c3ebaa5cb811853182ed631918b70"
-
 follow-redirects@1.0.0:
   version "1.0.0"
   resolved "http://registry.npm.taobao.org/follow-redirects/download/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"

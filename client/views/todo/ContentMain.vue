@@ -1,5 +1,15 @@
 <template>
   <section class="content-main">
+    <nav class="tabs-container">
+      <tabs value="1">
+        <tab label="tab1" index="1"></tab>
+        <tab index="2">
+          <span slot="label" style="color: red">tab123</span>
+        </tab>
+        <tab label="tab3" index="3"></tab>
+      </tabs>
+    </nav>
+
     <input
       type="text"
       class="add-item"
@@ -7,6 +17,7 @@
       placeholder="What needs to be done ?"
       @keyup.enter="addTodoItem"
     />
+
     <MainItem
       :item="item"
       :checkStatus="checkStatus"
@@ -15,6 +26,7 @@
       @refreshItems="refreshItems"
       @refreshItemCompleted="refreshItemCompleted"
     />
+
     <MainHelper
       :selected="hasSelected"
       :remainder="remainder"
@@ -152,6 +164,10 @@ export default {
   margin: 0 auto;
   width: 600px;
   box-shadow: 0 0 5px $color-medium-well;
+  .tabs-container {
+    background-color: #ffffff;
+    padding: 0 15px;
+  }
   .add-item {
     position: relative;
     margin: 0;
@@ -160,9 +176,9 @@ export default {
     line-height: 40px;
     border: 0;
     outline: none;
-    padding: 6px;
+    padding: 6px 6px 6px 15px;
     // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 -2px 1px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 -2px 1px 0 rgba(0, 0, 0, 0.03);
     box-sizing: border-box;
   }
 };
