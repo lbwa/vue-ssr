@@ -7,6 +7,7 @@ const staticRouter = require('./routers/static')
 const apiRouter = require('./routers/api')
 const createDb = require('./db/db')
 const config = require('../app.config')
+const koaBody = require('koa-body')
 
 const db = createDb(config.db.appId, config.db.appKey)
 
@@ -40,16 +41,18 @@ app.use(async (ctx, next) => {
 })
 
 app.use(async (ctx, next) => {
-  ctx.db = db
-  await next()
-})
-
-app.use(async (ctx, next) => {
   if (ctx.path === '/favicon.ico') {
     await send(ctx, '/favicon.ico', { root: path.join(__dirname, '../') })
   } else {
     await next()
   }
+})
+
+app.use(koaBody())
+
+app.use(async (ctx, next) => {
+  ctx.db = db
+  await next()
 })
 
 // 在生产环境中，访问静态资源的路由。它必须在 pageRouter 之前调用

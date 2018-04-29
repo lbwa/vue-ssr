@@ -11,9 +11,26 @@ const successResponse = data => {
   }
 }
 
-apiRouter.get('/todo', async (ctx) => {
-  const todoList = await ctx.db.getAllTodoList()
-  ctx.body = successResponse(todoList)
-})
+apiRouter
+  .get('/todoList', async (ctx) => {
+    const todoList = await ctx.db.getAllTodoList()
+    ctx.body = successResponse(todoList)
+  })
+  .post('/todo', async (ctx) => {
+    const data = await ctx.db.addTodo(ctx.request.body)
+    ctx.body = successResponse(data)
+  })
+  .put('/todo/:id', async (ctx) => {
+    const data = await ctx.db.updateTodo(ctx.params.id, ctx.request.body)
+    ctx.body = successResponse(data)
+  })
+  .delete('/todo/:id', async (ctx) => {
+    const data = await ctx.db.deleteTodo(ctx.params.id)
+    ctx.body = successResponse(data)
+  })
+  .post('/delete/completed', async (ctx) => {
+    const data = await ctx.db.deleteCompleted(ctx.request.body.ids)
+    ctx.body = successResponse(data)
+  })
 
 module.exports = apiRouter
