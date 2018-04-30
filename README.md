@@ -9,6 +9,8 @@
 
 ![mind-map][mind-map]
 
+以上是开发环境下的 `SSR mind map`。生产环境中逻辑较为简单，就是没有 `webpack dev server`，其中页面渲染的是打包过后产生的 `server bundle` 和 `clientManifest` 构成的 `renderer`，并与 `ctx` 、`template.ejs` 合并渲染出用户界面。
+
 [mind-map]:https://raw.githubusercontent.com/lbwa/vue-ssr/master/SSR%20mind%20map.png
 
 ## Build Setup
