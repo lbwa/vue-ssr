@@ -3,15 +3,24 @@
 const Koa = require('koa')
 const send = require('koa-send')
 const path = require('path')
+const koaBody = require('koa-body')
+const koaSession = require('koa-session')
+
 const staticRouter = require('./routers/static')
 const apiRouter = require('./routers/api')
+const userRouter = require('./routers/user')
 const createDb = require('./db/db')
 const config = require('../app.config')
-const koaBody = require('koa-body')
 
 const db = createDb(config.db.appId, config.db.appKey)
 
 const app = new Koa()
+
+app.keys = ['vue ssr']
+app.use(koaSession({
+  key: 'v-ssr-id',
+  maxAge: 2 * 60 * 60 * 1000
+}, app))
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -48,16 +57,16 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(koaBody())
-
 app.use(async (ctx, next) => {
   ctx.db = db
   await next()
 })
 
-// 在生产环境中，访问静态资源的路由。它必须在 pageRouter 之前调用
-app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+app.use(koaBody())
+app.use(userRouter.routes()).use(userRouter.allowedMethods())
 
+// 在生产环境中，访问静态资源的路由。staticRouter 必须在 pageRouter 之前调用
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
 const pageRouter = isDev

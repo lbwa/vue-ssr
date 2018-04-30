@@ -11,6 +11,18 @@ const successResponse = data => {
   }
 }
 
+// 登录验证
+const validateUser = async (ctx, next) => {
+  if (!ctx.session.user) {
+    ctx.status = 401
+    ctx.body = 'Oops ! You need to login'
+  } else {
+    await next()
+  }
+}
+
+apiRouter.use(validateUser)
+
 apiRouter
   .get('/todoList', async (ctx) => {
     const todoList = await ctx.db.getAllTodoList()
