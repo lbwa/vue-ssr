@@ -56,7 +56,7 @@ export default {
   .cover {
     @include position(absolute, 0, 0, 0, 0);
     background: #666;
-    opacity: 0.01;  // 此处调节透明度，可达到调节背景图明暗的目的
+    opacity: .1;  // 此处调节透明度，可达到调节背景图明暗的目的
     z-index: -1;
   }
 }

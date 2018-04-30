@@ -51,6 +51,8 @@ module.exports = merge(baseWebpackConfig, {
 
     headers: { 'Access-Control-Allow-Origin': '*' },
 
+    proxy: config.dev.proxyTable,
+
     // 设置是否展示 编译时的错误
     overlay: config.dev.errorOverlay
       ? { warnings: false, errors: true }

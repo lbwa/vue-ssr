@@ -11,7 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     // 写全地址是为了 ssr server 访问 client server 的静态资源时补全地址，否则 ssr server 设置代理
     assetsPublicPath: 'http://127.0.0.1:8080/public/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': 'http://127.0.0.1:8889',
+      '/user': 'http://127.0.0.1:8889'
+    },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST

@@ -47,7 +47,9 @@
 import MainItem from './MainItem'
 import MainHelper from './MainHelper'
 
-let id = 0 // 配置新建 item 的索引
+import model from '@/model/client-model'
+
+// let id = 0 // 配置新建 item 的索引
 
 export default {
   metaInfo: {
@@ -63,6 +65,13 @@ export default {
       timer: 0,
       stats: ['all', 'active', 'completed']
     }
+  },
+
+  created () {
+    model.getTodoList().then(res => console.log('res :', res))
+    // model.getTodoList().then(res => {
+    //   this.items = res.data
+    // })
   },
 
   components: {
@@ -96,7 +105,7 @@ export default {
         return
       }
       this.items.unshift({
-        id: id++,
+        // id: id++,
         content: e.target.value.trim(),
         completed: false,
         isDeleted: false
