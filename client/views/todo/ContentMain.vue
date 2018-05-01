@@ -46,8 +46,7 @@
 <script>
 import MainItem from './MainItem'
 import MainHelper from './MainHelper'
-
-import model from '@/model/client-model'
+import api from '@/common/js/api'
 
 // let id = 0 // 配置新建 item 的索引
 
@@ -68,10 +67,7 @@ export default {
   },
 
   created () {
-    model.getTodoList().then(res => console.log('res :', res))
-    // model.getTodoList().then(res => {
-    //   this.items = res.data
-    // })
+    api.getTodoList().then(data => console.log('data :', data))
   },
 
   components: {

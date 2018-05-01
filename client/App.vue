@@ -20,12 +20,12 @@ import LayoutFooter from '@/layout/LayoutFooter'
 export default {
   name: 'App',
 
-  mounted () {
-    this.$notify({
-      content: 'text $notify',
-      btn: 'close'
-    })
-  },
+  // mounted () {
+  //   this.$notify({
+  //     content: 'text $notify',
+  //     btn: 'close'
+  //   })
+  // },
 
   // methods: {
   //   testNotify () {

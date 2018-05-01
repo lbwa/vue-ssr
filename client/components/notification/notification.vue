@@ -9,7 +9,7 @@
     >
       <span class="content">{{content}}</span>
       <a
-        href="javascript: void()" class="close-btn" @click.prevent="handleClick"
+        href="javascript: void(0)" class="close-btn" @click.prevent="handleClick"
       >{{btn}}</a>
     </div>
   </transition>

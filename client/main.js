@@ -1,20 +1,22 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import App from '@/App'
-import createRouter from '@/config/router'
+// 废弃
 
-Vue.use(VueRouter)
+// import Vue from 'vue'
+// import VueRouter from 'vue-router'
+// import App from '@/App'
+// import createRouter from '@/config/router'
 
-const router = createRouter()
+// Vue.use(VueRouter)
 
-// 全局守卫
-router.beforeEach((to, from, next) => {
-  next()
-})
+// const router = createRouter()
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#root',
-  router,
-  render: h => h(App) // 渲染 App 组件，因是手动创建的环境，那么就是 runtime-only，那么就要使用 render 函数渲染组件
-})
+// // 全局守卫
+// router.beforeEach((to, from, next) => {
+//   next()
+// })
+
+// /* eslint-disable no-new */
+// new Vue({
+//   el: '#root',
+//   router,
+//   render: h => h(App) // 渲染 App 组件，因是手动创建的环境，那么就是 runtime-only，那么就要使用 render 函数渲染组件
+// })
