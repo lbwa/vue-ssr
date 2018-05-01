@@ -23,26 +23,22 @@
 import LayoutHeader from '@/layout/LayoutHeader'
 import LayoutFooter from '@/layout/LayoutFooter'
 import Loading from 'components/loading/loading'
-
-import state from '@/store/store'
+import globalBus from '@/util/global-bus'
 
 export default {
   name: 'App',
 
   data () {
     return {
-      loading: state.loading
+      loading: false
     }
   },
 
-  watch: {
-    loading: {
-      handle () {
-        console.log('this.loading :', true)
-      },
-      immediate: true,
-      deep: true
-    }
+  created () {
+    // from store/mutations
+    globalBus.$on('toggleLoading', status => {
+      this.loading = status
+    })
   },
 
   components: {

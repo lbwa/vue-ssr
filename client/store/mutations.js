@@ -1,5 +1,6 @@
 // 简单实现 vuex mutations
 import state from './store'
+import globalBus from '@/util/global-bus'
 
 export default {
   fillTodoList (data) {
@@ -36,9 +37,11 @@ export default {
 
   startLoading () {
     state.loading = true
+    globalBus.$emit('toggleLoading', true)
   },
 
   endLoading () {
     state.loading = false
+    globalBus.$emit('toggleLoading', false)
   }
 }
