@@ -4,10 +4,10 @@ import globalBus from '../../util/global-bus'
 export const createError = (err) => {
   if (err.code === 401) {
     notify({
-      content: '请登录'
+      content: '请登录后再进行操作 ！'
     })
 
-    // client-entry
-    globalBus.$emit('toggleRoute')
+    // client-entry $on
+    globalBus.$emit('authorize')
   }
 }

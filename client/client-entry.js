@@ -3,7 +3,7 @@ import globalBus from './util/global-bus'
 
 const { app, router } = createApp()
 
-globalBus.$on('toggleRoute', () => {
+globalBus.$on('authorize', () => {
   router.push('/login')
 })
 

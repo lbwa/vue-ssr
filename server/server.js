@@ -18,8 +18,10 @@ const app = new Koa()
 
 app.keys = ['vue ssr']
 app.use(koaSession({
+  // cookie 键名
   key: 'v-ssr-id',
-  maxAge: 2 * 60 * 60 * 1000
+  // maxAge: 2 * 60 * 60 * 1000
+  maxAge: 2 * 60 * 1000
 }, app))
 
 const isDev = process.env.NODE_ENV === 'development'

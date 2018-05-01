@@ -30,14 +30,13 @@
       :checkStatus="checkStatus"
       v-for="item of filteredItems"
       :key="item.id"
-      @refreshItems="refreshItems"
+      @destroyItem="destroyItem"
       @refreshItemCompleted="refreshItemCompleted"
     />
 
     <MainHelper
       :selected="hasSelected"
       :remainder="remainder"
-      :showCompletedText="completedText"
       @clearCompleted="clearCompleted"
     />
   </section>
@@ -47,6 +46,7 @@
 import MainItem from './MainItem'
 import MainHelper from './MainHelper'
 import api from '@/common/js/api'
+import state from '@/store/store'
 
 // let id = 0 // 配置新建 item 的索引
 
@@ -59,15 +59,17 @@ export default {
     return {
       items: [], // 所有条目的容器
       hasSelected: 'all', // 当前用户选择的项 all/active/completed
-      completedText: 'Clear Completed',
       checkStatus: false,
-      timer: 0,
       stats: ['all', 'active', 'completed']
     }
   },
 
   created () {
-    api.getTodoList().then(data => console.log('data :', data))
+    if (this.items && this.items.length < 1) {
+      api.getTodoList().then(() => {
+        this.items = state.todoList
+      })
+    }
   },
 
   components: {
@@ -96,39 +98,35 @@ export default {
       this.hasSelected = index
     },
 
-    addTodoItem (e) {
-      if (!e.target.value) {
+    addTodoItem (evt) {
+      if (!evt.target.value.trim()) {
+        this.$notify({
+          content: '请输入待办事项 (=・ω・=)'
+        })
+
         return
       }
-      this.items.unshift({
-        // id: id++,
-        content: e.target.value.trim(),
-        completed: false,
-        isDeleted: false
+
+      // this.items 与 state.todoList 引用同一对象，故当 todoList 更新时，this.items 也将变化
+      api.addTodo({
+        content: evt.target.value.trim(),
+        completed: false
       })
-      e.target.value = ''
+      evt.target.value = ''
     },
 
-    refreshItems (todo) {
-      todo.isDeleted = true
-      this.items = this.items.filter(item => {
-        return !item.isDeleted
-      })
+    destroyItem (todo) {
+      api.deleteTodo(todo.id)
     },
 
-    refreshItemCompleted (item) {
-      item.completed = !item.completed
+    refreshItemCompleted (todo) {
+      api.editTodo(todo.id, {...todo, completed: !todo.completed})
     },
 
     clearCompleted () {
-      this.items = this.items.filter(item => {
-        return !item.completed
+      api.deleteAllCompleted().then(() => {
+        this.items = state.todoList
       })
-      this.completedText = 'Done !'
-      if (!this.timer) { clearTimeout(this.timer) }
-      this.timer = setTimeout(() => {
-        this.completedText = 'Clear Completed'
-      }, 1000)
     }
   }
 

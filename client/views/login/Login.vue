@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import api from '@/common/js/api'
+
 export default {
   methods: {
     validate () {
@@ -42,6 +44,13 @@ export default {
     handleSubmit (evt) {
       if (this.validate()) {
         // user api
+        api.login({
+          username: this.username,
+          password: this.password
+        })
+          .then(() => {
+            this.$router.replace('/app')
+          })
 
         this.username = ''
         this.password = ''

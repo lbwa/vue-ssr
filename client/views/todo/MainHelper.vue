@@ -9,7 +9,7 @@
       @click="toggleSelect(item)"
       >{{ item }}</li>
     </ul> -->
-    <span class="clear" @click="clearAllCompleted">{{ showCompletedText }}</span>
+    <span class="clear" @click="clearAllCompleted">Clear Completed</span>
   </nav>
 </template>
 
@@ -22,10 +22,6 @@ export default {
     },
     remainder: {
       type: Number,
-      required: true
-    },
-    showCompletedText: {
-      type: String,
       required: true
     }
   },

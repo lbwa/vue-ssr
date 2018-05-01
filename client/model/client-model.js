@@ -34,19 +34,23 @@ export default {
     return handleRequest(request.get('/api/todoList'))
   },
 
-  addTodo () {
-    return handleRequest(request.post('/api/todo'))
+  login (username, password) {
+    return handleRequest(request.post('/user/login', { username, password }))
   },
 
-  editTodo (id) {
-    return handleRequest(request.put(`/api/${id}`))
+  addTodo (todo) {
+    return handleRequest(request.post('/api/todo', todo))
+  },
+
+  editTodo (id, todo) {
+    return handleRequest(request.put(`/api/todo/${id}`, todo))
   },
 
   deleteTodo (id) {
-    return handleRequest(request.delete(`/api/${id}`))
+    return handleRequest(request.delete(`/api/todo/${id}`))
   },
 
-  deleteTodoList () {
-    return handleRequest(request.post('/delete/completed'))
+  deleteAllCompleted (ids) {
+    return handleRequest(request.post('/api/delete/completed', { ids }))
   }
 }
