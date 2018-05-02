@@ -1,4 +1,4 @@
-// database request
+// request online database
 const sha1 = require('sha1')
 const axios = require('axios')
 

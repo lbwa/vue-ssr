@@ -1,6 +1,9 @@
 // request api in vue components
 
-import model from '@/model/client-model'
+// import model from '@/model/client-model'
+// 因在 webpack.dev 或 webpack.prod 中已映射 resolve.alias，故可直接 import model
+// 这样做的好处是，依据不同的环境(client 或 SSR server)引入不同的模块
+import model from 'model'
 import { createError } from '@/common/js/util'
 import mutations from '@/store/mutations'
 import state from '@/store/store'

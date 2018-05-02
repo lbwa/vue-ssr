@@ -78,6 +78,12 @@ module.exports = merge(baseWebpackConfig, {
     ]
   },
 
+  resolve: {
+    alias: {
+      'model': path.join(__dirname, '../client/model/client-model.js')
+    }
+  },
+
   plugins: [
     ...useAnalyzerPlugin(),
 

@@ -48,8 +48,6 @@ import MainHelper from './MainHelper'
 import api from '@/common/js/api'
 import state from '@/store/store'
 
-// let id = 0 // 配置新建 item 的索引
-
 export default {
   metaInfo: {
     title: 'Bowen\'s Todo App'
@@ -64,12 +62,21 @@ export default {
     }
   },
 
-  created () {
+  // 用于客户端界面渲染，SSR 数据获取在 server-entry 中触发
+  mounted () {
     if (this.items && this.items.length < 1) {
       api.getTodoList().then(() => {
         this.items = state.todoList
       })
     }
+  },
+
+  // 在开始渲染前，预取并解析数据
+  // https://github.com/vuejs/vue-ssr-docs/blob/master/zh/data.md#带有逻辑配置的组件logic-collocation-with-components
+  // https://ssr.vuejs.org/zh/data.html
+  asyncData () {
+    console.info('Running')
+    return api.getTodoList()
   },
 
   components: {
