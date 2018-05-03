@@ -7,6 +7,16 @@ export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp()
 
+    /**
+     * 1. userInfo 于 server-render 的 handleSSR 中以 ctx.session.userInfo 形式注
+     * 入
+     * 2. 该方法的好处是在开始 SSR 前就已经确定 用户的信息，以此来解决
+     * window.__INITIAL_STATE__ 替换 client 端 store 时，没有验证用户是否登录的问题
+     */
+    if (context.userInfo) {
+      store.state.userInfo = context.userInfo
+    }
+
     // 服务端渲染区分路由的方法，它根据用户访问的 url 来触发 vue-router 跳转
     router.push(context.url)
 

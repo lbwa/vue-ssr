@@ -14,12 +14,17 @@ module.exports = async (ctx, renderer, template) => {
   // koa context 封装了 node 的 request 和 response 对象
   // 特别地，ctx.req 表示 Node 的 request，ctx.request 表示 koa request
   // ctx.path 是 ctx.request.path 的别名，表示请求路径
-  const context = { url: ctx.path }
+
+  // ctx.session.user 于 输入用户名 密码时写入。位于 /server/routers/user.js
+  const context = { url: ctx.path, userInfo: ctx.session.user }
+
+  console.log('ctx.session.user :', ctx.session.user)
 
   try {
     // 将 vue 实例（renderer，由服务器 bundle 和 clientManifest 构成）渲染为字符串
     // 向 context 对象添加 context.renderStyles() 等方法
     const appString = await renderer.renderToString(context)
+    // 在执行完 appString 后将产生 context.renderState() 方法
 
     const { title } = context.meta.inject()
 
@@ -46,7 +51,9 @@ module.exports = async (ctx, renderer, template) => {
        */
       scripts: context.renderScripts(),
 
-      title: title.text()
+      title: title.text(),
+
+      initialState: context.renderState()
     })
 
     // 替换渲染上下文的 body 部分，原本为 dev-ssr 中的 '加载中...' 字样

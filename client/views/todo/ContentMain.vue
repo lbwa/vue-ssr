@@ -61,17 +61,34 @@ export default {
 
   // 用于客户端界面渲染，执行时机慢于 SSR 数据预获取，SSR 数据获取在 server-entry 中触发
   beforeMount () {
+    // 当 client-entry 的 window.__INITIAL_STATE__ 注入为空时，执行请求
     if (this.todoList && this.todoList.length === 0) {
       this.getTodoList()
     }
+
+    /**
+     * 1. 通过将 store 使用 renderState() 注入到 html 后成为 client 端的 window 对
+     * 象的某一属性，这是现阶段唯一来传递 SSR 请求到的数据对象（SSR server 端）到
+     * client 端的方法。即手动注入 state 于 html 中。
+     * 2. 注意，在 client 端和 SSR server 端 store 等数据都是两套相互独立的系统，并
+     * 不互相影响，只有通过 1 方法来替换 client 端的 store 来达到 SSR 时的预取数据目
+     * 的。
+     * 3. 以上可不使用 vuex 来实现，自己实现时的关键点在于实现预取数据和手动注入数据对
+     * 象时的逻辑
+     */
   },
 
   // 用于在 SSR 开始渲染前，预取并解析数据
   // https://github.com/vuejs/vue-ssr-docs/blob/master/zh/data.md#带有逻辑配置的组件logic-collocation-with-components
   // https://ssr.vuejs.org/zh/data.html
   asyncData ({ route, store }) {
-    return store.dispatch('getTodoList')
-    // 此处执行时，还未建立 vue 实例，故无法使用 this 对象
+    // userInfo 于 server-render 的 handleSSR 中以 ctx.session.userInfo 形式注入
+    if (store.state.userInfo) {
+      return store.dispatch('getTodoList')
+      // 此处执行时，还未建立 vue 实例，故无法使用 this 对象
+    }
+
+    return Promise.resolve()
   },
 
   components: {
