@@ -23,10 +23,13 @@
 </template>
 
 <script>
-import api from '@/common/js/api'
+// import api from '@/common/js/api'
+import { mapActions } from 'vuex'
 
 export default {
   methods: {
+    ...mapActions(['login']),
+
     validate () {
       if (!this.username.trim()) {
         this.errorMsg = '请输入用户名'
@@ -44,7 +47,8 @@ export default {
     handleSubmit (evt) {
       if (this.validate()) {
         // user api
-        api.login({
+        this.login({
+        // api.login({
           username: this.username,
           password: this.password
         })

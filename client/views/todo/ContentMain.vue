@@ -27,7 +27,6 @@
 
     <MainItem
       :item="item"
-      :checkStatus="checkStatus"
       v-for="item of filteredItems"
       :key="item.id"
       @destroyItem="destroyItem"
@@ -45,8 +44,8 @@
 <script>
 import MainItem from './MainItem'
 import MainHelper from './MainHelper'
-import api from '@/common/js/api'
-import state from '@/store/store'
+
+import { mapState, mapActions } from 'vuex'
 
 export default {
   metaInfo: {
@@ -55,28 +54,24 @@ export default {
 
   data () {
     return {
-      items: [], // 所有条目的容器
       hasSelected: 'all', // 当前用户选择的项 all/active/completed
-      checkStatus: false,
       stats: ['all', 'active', 'completed']
     }
   },
 
-  // 用于客户端界面渲染，SSR 数据获取在 server-entry 中触发
-  mounted () {
-    if (this.items && this.items.length < 1) {
-      api.getTodoList().then(() => {
-        this.items = state.todoList
-      })
+  // 用于客户端界面渲染，执行时机慢于 SSR 数据预获取，SSR 数据获取在 server-entry 中触发
+  beforeMount () {
+    if (this.todoList && this.todoList.length === 0) {
+      this.getTodoList()
     }
   },
 
-  // 在开始渲染前，预取并解析数据
+  // 用于在 SSR 开始渲染前，预取并解析数据
   // https://github.com/vuejs/vue-ssr-docs/blob/master/zh/data.md#带有逻辑配置的组件logic-collocation-with-components
   // https://ssr.vuejs.org/zh/data.html
-  asyncData () {
-    console.info('Running')
-    return api.getTodoList()
+  asyncData ({ route, store }) {
+    return store.dispatch('getTodoList')
+    // 此处执行时，还未建立 vue 实例，故无法使用 this 对象
   },
 
   components: {
@@ -85,22 +80,32 @@ export default {
   },
 
   computed: {
+    ...mapState(['todoList']),
+
     remainder () {
-      return this.items.filter(item => { // 只要 items 发生变化就会重新计算
+      return this.todoList.filter(item => { // 只要 items 发生变化就会重新计算
         return !item.completed
       }).length
     },
 
     filteredItems () { // 选择 hasSelected 时，应是过滤显示，而不是修改源数据
       if (this.hasSelected === 'all') {
-        return this.items
+        return this.todoList
       }
       const completed = this.hasSelected === 'completed'
-      return this.items.filter(item => completed === item.completed)
+      return this.todoList.filter(item => completed === item.completed)
     }
   },
 
   methods: {
+    ...mapActions([
+      'getTodoList',
+      'addTodo',
+      'deleteTodo',
+      'editTodo',
+      'deleteAllCompleted'
+    ]),
+
     handleChangeTab (index) {
       this.hasSelected = index
     },
@@ -114,8 +119,7 @@ export default {
         return
       }
 
-      // this.items 与 state.todoList 引用同一对象，故当 todoList 更新时，this.items 也将变化
-      api.addTodo({
+      this.addTodo({
         content: evt.target.value.trim(),
         completed: false
       })
@@ -123,17 +127,15 @@ export default {
     },
 
     destroyItem (todo) {
-      api.deleteTodo(todo.id)
+      this.deleteTodo(todo.id)
     },
 
     refreshItemCompleted (todo) {
-      api.editTodo(todo.id, {...todo, completed: !todo.completed})
+      this.editTodo({id: todo.id, todo: {...todo, completed: !todo.completed}})
     },
 
     clearCompleted () {
-      api.deleteAllCompleted().then(() => {
-        this.items = state.todoList
-      })
+      this.deleteAllCompleted()
     }
   }
 

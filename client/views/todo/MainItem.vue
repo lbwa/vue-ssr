@@ -18,12 +18,9 @@ export default {
     item: {
       type: Object,
       required: true
-    },
-    checkStatus: {
-      type: Boolean,
-      required: true
     }
   },
+
   methods: {
     destroyItem () {
       this.$emit('destroyItem', this.item)

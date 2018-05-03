@@ -30,8 +30,6 @@ const handleRequest = (request) => {
     }).catch(err => {
       const resp = err.response
 
-      console.log('err :', err)
-
       if (resp.status === 401) {
         reject(createError(401, '需要登录'))
       }

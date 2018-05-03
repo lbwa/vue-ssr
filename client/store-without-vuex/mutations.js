@@ -1,4 +1,4 @@
-// 简单实现 vuex mutations
+// 简单实现 vuex mutations, 用于修改 state
 import state from './store'
 import globalBus from '@/util/global-bus'
 

@@ -1,12 +1,11 @@
 // 将用于 ssr 渲染得到 服务器 bundle，并在之后与 clientManifest 结合得到 renderer
 // 作为 webpack.server.config.js 的打包入口文件入口
 import createApp from './create-app'
-import state from '@/store/store'
 
 // server-render 中 context 对象被赋予 url
 export default context => {
   return new Promise((resolve, reject) => {
-    const { app, router } = createApp()
+    const { app, router, store } = createApp()
 
     // 服务端渲染区分路由的方法，它根据用户访问的 url 来触发 vue-router 跳转
     router.push(context.url)
@@ -38,16 +37,16 @@ export default context => {
           return Component.asyncData({
             // 当前路由对应的路由信息对象
             route: router.currentRoute,
-            store: { state }
+            store
           })
         }
       }))
-        .then(data => {
+        .then(() => {
           // https://github.com/declandewet/vue-meta#step-21-exposing-meta-to-bundlerenderer
           // 将 vue-meta 在 vue 实例上的 $meta 方法返回值赋值给 context 对象（该对象将作为渲染根据）
           context.meta = app.$meta()
 
-          context.state = state
+          context.state = store.state
           resolve(app)
         })
         .catch(err => {
