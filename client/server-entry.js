@@ -39,21 +39,43 @@ export default context => {
         return reject(new Error('No component matched'))
       }
 
+      // use vuex
+      // ======================================================================
+
       // SSR 服务端数据预取
       // https://github.com/vuejs/vue-ssr-docs/blob/master/zh/data.md#服务器端数据预取server-data-fetching
       // https://ssr.vuejs.org/zh/data.html
+      // Promise.all(matchedComponents.map(Component => {
+      //   if (Component.asyncData) {
+      //     return Component.asyncData({
+      //       // 当前路由对应的路由信息对象
+      //       route: router.currentRoute,
+      //       store
+      //     })
+      //   }
+      // }))
+      //   .then(() => {
+      //     // https://github.com/declandewet/vue-meta#step-21-exposing-meta-to-bundlerenderer
+      //     // 将 vue-meta 在 vue 实例上的 $meta 方法返回值赋值给 context 对象（该对象将作为渲染根据）
+      //     context.meta = app.$meta()
+
+      //     context.state = store.state
+      //     resolve(app)
+      //   })
+      //   .catch(err => {
+      //     console.error(err)
+      //   })
+
+      // without vuex
+      // ======================================================================
       Promise.all(matchedComponents.map(Component => {
         if (Component.asyncData) {
           return Component.asyncData({
-            // 当前路由对应的路由信息对象
-            route: router.currentRoute,
             store
           })
         }
       }))
         .then(() => {
-          // https://github.com/declandewet/vue-meta#step-21-exposing-meta-to-bundlerenderer
-          // 将 vue-meta 在 vue 实例上的 $meta 方法返回值赋值给 context 对象（该对象将作为渲染根据）
           context.meta = app.$meta()
 
           context.state = store.state

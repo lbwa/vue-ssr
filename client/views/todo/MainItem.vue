@@ -26,7 +26,7 @@ export default {
       this.$emit('destroyItem', this.item)
     },
     refreshThisCompleted () {
-      this.$emit('refreshItemCompleted', this.item)
+      this.$emit('toggleCompleted', this.item)
     }
   }
 }

@@ -22,13 +22,13 @@ const handleRequest = (request) => {
         return reject(createError(400, 'No matched data'))
       }
 
-      if (!data.success) {
-        return reject(createError(400, data.message))
-      }
-
       resolve(data.data)
     }).catch(err => {
       const resp = err.response
+
+      if (resp.status === 400) {
+        reject(createError(400, resp.data.message))
+      }
 
       if (resp.status === 401) {
         reject(createError(401, '需要登录'))

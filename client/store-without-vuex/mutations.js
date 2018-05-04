@@ -4,7 +4,8 @@ import globalBus from '@/util/global-bus'
 
 export default {
   fillTodoList (data) {
-    state.todoList = data
+    // 此处不能用 赋值，而是直接使用合并对象，因为赋值就在 client 端由一个 todoList 容器，转变为了引用两个 todoList 容器
+    Object.assign(state.todoList, data)
   },
 
   fillUserInfo (userInfo) {
@@ -33,6 +34,9 @@ export default {
     state.todoList = state.todoList.filter(item => {
       return !item.completed
     })
+
+    // 因为 state.todoList 引用了新的对象，派发事件同步 this.todoList 对 state.todoList 的引用
+    globalBus.$emit('deleteAllCompleted')
   },
 
   startLoading () {

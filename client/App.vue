@@ -24,21 +24,23 @@ import LayoutHeader from '@/layout/LayoutHeader'
 import LayoutFooter from '@/layout/LayoutFooter'
 
 import Loading from 'components/loading/loading'
-import { mapState } from 'vuex'
+import globalBus from '@/util/global-bus'
 
 export default {
   name: 'App',
 
-  computed: {
-    ...mapState(['loading'])
+  data () {
+    return {
+      loading: false
+    }
   },
 
-  // created () {
-  //   // from store-without-vuex/mutations
-  //   globalBus.$on('toggleLoading', status => {
-  //     this.loading = status
-  //   })
-  // },
+  created () {
+    // from store-without-vuex/mutations
+    globalBus.$on('toggleLoading', status => {
+      this.loading = status
+    })
+  },
 
   components: {
     LayoutHeader,

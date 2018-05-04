@@ -4,8 +4,8 @@
 // 这样做的好处是，依据不同的环境(client 或 SSR server)引入不同的模块
 import model from 'model'
 import { createError } from '@/common/js/util'
-import mutations from '@/store/mutations'
-import state from '@/store/store'
+import mutations from './mutations'
+import state from './store'
 import notify from 'components/notification/function'
 
 // 简单实现 vuex actions
@@ -63,7 +63,7 @@ export default {
       })
   },
 
-  editTodo (id, todo) {
+  editTodo ({id, todo}) {
     mutations.startLoading()
     return model.editTodo(id, todo)
       .then(data => {

@@ -18,8 +18,6 @@ module.exports = async (ctx, renderer, template) => {
   // ctx.session.user 于 输入用户名 密码时写入。位于 /server/routers/user.js
   const context = { url: ctx.path, userInfo: ctx.session.user }
 
-  console.log('ctx.session.user :', ctx.session.user)
-
   try {
     // 将 vue 实例（renderer，由服务器 bundle 和 clientManifest 构成）渲染为字符串
     // 向 context 对象添加 context.renderStyles() 等方法

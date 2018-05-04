@@ -30,7 +30,7 @@
       v-for="item of filteredItems"
       :key="item.id"
       @destroyItem="destroyItem"
-      @refreshItemCompleted="refreshItemCompleted"
+      @toggleCompleted="toggleCompleted"
     />
 
     <MainHelper
@@ -44,8 +44,7 @@
 <script>
 import MainItem from './MainItem'
 import MainHelper from './MainHelper'
-
-import { mapState, mapActions } from 'vuex'
+import globalBus from '@/util/global-bus'
 
 export default {
   metaInfo: {
@@ -54,16 +53,31 @@ export default {
 
   data () {
     return {
+      todoList: [],
       hasSelected: 'all', // 当前用户选择的项 all/active/completed
       stats: ['all', 'active', 'completed']
     }
   },
 
+  created () {
+    // Object.assign(this.$data, this.$globalStore.state) 会引入不必要的数据
+
+    this.todoList = this.$globalStore.state.todoList
+    globalBus.$on('deleteAllCompleted', () => {
+      /**
+       * 因为 mutations 中删除完成项时，store.state.todoList 将引用新的对象，而此处
+       * 的 this.todoList 仍保持了对原对象的引用。下面回调会强制保持对 store.state
+       * 的引用
+       */
+      this.todoList = this.$globalStore.state.todoList
+    })
+  },
+
   // 用于客户端界面渲染，执行时机慢于 SSR 数据预获取，SSR 数据获取在 server-entry 中触发
-  beforeMount () {
-    // 当 client-entry 的 window.__INITIAL_STATE__ 注入为空时，执行请求
+  mounted () {
+    // 当 client-entry 的 window.__INITIAL_STATE__ 注入为空时，执行请求，即没有使用 SSR 的时候执行以下请求
     if (this.todoList && this.todoList.length === 0) {
-      this.getTodoList()
+      this.$globalStore.actions.getTodoList()
     }
 
     /**
@@ -81,10 +95,10 @@ export default {
   // 用于在 SSR 开始渲染前，预取并解析数据
   // https://github.com/vuejs/vue-ssr-docs/blob/master/zh/data.md#带有逻辑配置的组件logic-collocation-with-components
   // https://ssr.vuejs.org/zh/data.html
-  asyncData ({ route, store }) {
+  asyncData ({ store }) {
     // userInfo 于 server-render 的 handleSSR 中以 ctx.session.userInfo 形式注入
     if (store.state.userInfo) {
-      return store.dispatch('getTodoList')
+      return store.actions.getTodoList()
       // 此处执行时，还未建立 vue 实例，故无法使用 this 对象
     }
 
@@ -97,8 +111,6 @@ export default {
   },
 
   computed: {
-    ...mapState(['todoList']),
-
     remainder () {
       return this.todoList.filter(item => { // 只要 items 发生变化就会重新计算
         return !item.completed
@@ -115,14 +127,6 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'getTodoList',
-      'addTodo',
-      'deleteTodo',
-      'editTodo',
-      'deleteAllCompleted'
-    ]),
-
     handleChangeTab (index) {
       this.hasSelected = index
     },
@@ -136,7 +140,7 @@ export default {
         return
       }
 
-      this.addTodo({
+      this.$globalStore.actions.addTodo({
         content: evt.target.value.trim(),
         completed: false
       })
@@ -144,15 +148,15 @@ export default {
     },
 
     destroyItem (todo) {
-      this.deleteTodo(todo.id)
+      this.$globalStore.actions.deleteTodo(todo.id)
     },
 
-    refreshItemCompleted (todo) {
-      this.editTodo({id: todo.id, todo: {...todo, completed: !todo.completed}})
+    toggleCompleted (todo) {
+      this.$globalStore.actions.editTodo({id: todo.id, todo: {...todo, completed: !todo.completed}})
     },
 
     clearCompleted () {
-      this.deleteAllCompleted()
+      this.$globalStore.actions.deleteAllCompleted()
     }
   }
 
