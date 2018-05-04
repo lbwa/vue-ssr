@@ -6,6 +6,8 @@
  * 路由懒加载(异步组件)
  * 1. 为识别 import() 语法，需安装 babel-plugin-syntax-dynamic-import
  * 2. 并在 .babelrc 配置使用插件 syntax-dynamic-import
+ * 注：仅在开发环境时，在使用 createBundle 进行 SSR 渲染时，若使用 memory-fs 则不能
+ * 使用异步加载组件，因为 memory-fs 无法在内存中找到 组件
  */
 
 export default [
@@ -35,5 +37,6 @@ export default [
   {
     path: '/login',
     component: () => import('@/views/login/Login')
+    // component: Login
   }
 ]

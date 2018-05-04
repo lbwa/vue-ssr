@@ -24,6 +24,18 @@ module.exports = async (ctx, renderer, template) => {
     const appString = await renderer.renderToString(context)
     // 在执行完 appString 后将产生 context.renderState() 方法
 
+    /**
+     * 在服务端重定向未登录时的页面
+     * 1. 在此处重定向的优势在于，用户不会看到重定向的过程
+     * 2. 此处弊端：因为 renderer 是 bundle renderer(dev-ssr 中)，那么之前需要被重
+     * 定向的页面也要 SSR，并且要在 bundle 渲染为 json 之后才能重定向，这样给服务端造
+     * 成了一个性能浪费
+     */
+    if (context.router.currentRoute.fullPath !== ctx.path) {
+      // 重定向并重新渲染新的 SSR 页面
+      return ctx.redirect(context.router.currentRoute.fullPath)
+    }
+
     const { title } = context.meta.inject()
 
     /**

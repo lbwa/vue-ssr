@@ -47,6 +47,7 @@ export default context => {
           return Component.asyncData({
             // 当前路由对应的路由信息对象
             route: router.currentRoute,
+            router,
             store
           })
         }
@@ -55,8 +56,8 @@ export default context => {
           // https://github.com/declandewet/vue-meta#step-21-exposing-meta-to-bundlerenderer
           // 将 vue-meta 在 vue 实例上的 $meta 方法返回值赋值给 context 对象（该对象将作为渲染根据）
           context.meta = app.$meta()
-
           context.state = store.state
+          context.router = router
           resolve(app)
         })
         .catch(err => {

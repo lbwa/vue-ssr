@@ -81,13 +81,15 @@ export default {
   // 用于在 SSR 开始渲染前，预取并解析数据
   // https://github.com/vuejs/vue-ssr-docs/blob/master/zh/data.md#带有逻辑配置的组件logic-collocation-with-components
   // https://ssr.vuejs.org/zh/data.html
-  asyncData ({ route, store }) {
+  asyncData ({ route, router, store }) {
     // userInfo 于 server-render 的 handleSSR 中以 ctx.session.userInfo 形式注入
     if (store.state.userInfo) {
       return store.dispatch('getTodoList')
       // 此处执行时，还未建立 vue 实例，故无法使用 this 对象
     }
 
+    // 未登录时，路由跳转
+    router.replace('/login')
     return Promise.resolve()
   },
 

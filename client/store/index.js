@@ -1,5 +1,5 @@
 import Vuex from 'vuex'
-import createLogger from 'vuex/dist/logger'
+// import createLogger from 'vuex/dist/logger'
 
 import defaultState from './state/state'
 // import getters from './getters/getters'
@@ -16,7 +16,8 @@ export default () => {
     mutations,
     actions,
     strict: debug,
-    plugins: debug ? [createLogger()] : []
+    // plugins: debug ? [createLogger()] : []
+    plugins: []
   })
 
   // 给 store 添加热模块加载功能
