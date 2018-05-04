@@ -72,7 +72,8 @@ app.use(apiRouter.routes()).use(apiRouter.allowedMethods())
 
 const pageRouter = isDev
   ? require('./routers/dev-ssr')
-  : require('./routers/ssr')
+  // : require('./routers/ssr')
+  : require('./routers/ssr-no-bundle')
 
 /**
  * 1. 在上游中间件调用 next() 之后执行，同时上游中间件的执行暂停

@@ -18,6 +18,21 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const debug = process.env.NODE_ENV === 'development'
+
+const plugins = [
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    'process.env.VUE_ENV': '"server"'
+  }),
+
+  new ExtractTextPlugin('styles.[contentHash:8].css')
+]
+
+if (debug) {
+  plugins.push(new VueServerPlugin())
+}
+
 module.exports = merge(baseWebpackConfig, {
   // 指定打包后的代码运行环境，告知 vue-loader 输送面向服务器代码
   target: 'node',
@@ -65,16 +80,5 @@ module.exports = merge(baseWebpackConfig, {
     }
   },
 
-  plugins: [
-    // 传入字符串可指定生成文件名
-    // ...(process.env.NODE_ENV === 'development' ? [new VueServerPlugin()] : []),
-    new VueServerPlugin(),
-
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"server"'
-    }),
-
-    new ExtractTextPlugin('styles.[contentHash:8].css')
-  ]
+  plugins
 })

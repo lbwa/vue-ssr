@@ -121,6 +121,12 @@ module.exports = merge(baseWebpackConfig, {
       }
     }),
 
+    // 自定义 ChunkName, 详见 /client/config/routes.js
+    // 因为 webpack 打包异步组件时，前面的序号是随机的。使用该插件将固定异步组件打包名
+    // 前段，除非修改异步组件的代码，否则该异步组件名和 hash 将不会变化。这也是一个缓
+    // 存优化的点
+    new webpack.NamedChunksPlugin(),
+
     // 以下为 webpack 3 的配置，用于打包第三方类库和生成的 webpack 代码
     // webpack 4.0 已经移除 webpack.optimize.CommonsChunkPlugin，使用 config.optimization.splitChunks 代替
 

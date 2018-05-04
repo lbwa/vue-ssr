@@ -17,7 +17,7 @@ export default [
   },
   {
     path: '/app',
-    component: () => import('todo/ContentMain'),
+    component: () => import(/* webpackChunkName: "todo-view" */ 'todo/ContentMain'),
 
     // 路由独享守卫
     beforeEnter (to, from, next) {
@@ -36,7 +36,7 @@ export default [
   },
   {
     path: '/login',
-    component: () => import('@/views/login/Login')
+    component: () => import(/* webpackChunkName: "login-view" */ '@/views/login/Login')
     // component: Login
   }
 ]
