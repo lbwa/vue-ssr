@@ -1,6 +1,6 @@
 <template>
   <div class="content-item">
-    <span class="toggle" @click="refreshThisCompleted">
+    <span class="toggle" @click="toggleCompleted">
       <i :class="[item.completed ? 'icon-ok' : 'icon-ok-outline']"></i>
     </span>
     <div :class="['item-content', item.completed ? 'completed' : '']">
@@ -25,8 +25,8 @@ export default {
     destroyItem () {
       this.$emit('destroyItem', this.item)
     },
-    refreshThisCompleted () {
-      this.$emit('refreshItemCompleted', this.item)
+    toggleCompleted () {
+      this.$emit('toggleCompleted', this.item)
     }
   }
 }

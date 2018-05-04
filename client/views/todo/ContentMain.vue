@@ -30,7 +30,7 @@
       v-for="item of filteredItems"
       :key="item.id"
       @destroyItem="destroyItem"
-      @refreshItemCompleted="refreshItemCompleted"
+      @toggleCompleted="toggleCompleted"
     />
 
     <MainHelper
@@ -147,7 +147,7 @@ export default {
       this.deleteTodo(todo.id)
     },
 
-    refreshItemCompleted (todo) {
+    toggleCompleted (todo) {
       this.editTodo({id: todo.id, todo: {...todo, completed: !todo.completed}})
     },
 

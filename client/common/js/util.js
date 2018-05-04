@@ -6,8 +6,12 @@ export const createError = (err) => {
     notify({
       content: '请登录后再进行操作 ！'
     })
-
-    // client-entry $on
-    globalBus.$emit('authorize')
+  } else if (err.code === 400) {
+    notify({
+      content: err.type
+    })
   }
+
+  // client-entry $on
+  globalBus.$emit('authorize')
 }
