@@ -51,7 +51,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 | API | 优势 | 弊端 |
 | --- | ---- | ---- |
-| `createBundleRenderer` | 使用 `memory-fs` 时，同时亦可使用异步路由组件，这将带来高效的性能优势  | 页面重定向必须发生在 `renderToString` 之后，那么将要被重定向的页面仍会参与渲染 |
+| `createBundleRenderer` | 使用 `memory-fs` 时，同时亦可使用异步路由组件，这将带来高效的性能优势（内存读写速度快，异步组件加载快） | 页面重定向必须发生在 `renderToString` 之后，那么将要被重定向的页面仍会参与渲染 |
 | `createRenderer` | 可在 `renderToString` 之前，重定向页面 | 在使用 `memory-fs` 时，不能使用 异步路由组件，因为无法在内存中找到相应组件 |
 
 综上，二者的优势侧重点有所不同，`createBundleRenderer` 侧重在整个项目的高效性能，`createRenderer` 侧重避免不必要的页面渲染，以在 `SSR` 过程中减小页面重定向时给服务器带来的压力。
