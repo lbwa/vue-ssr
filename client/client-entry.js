@@ -1,9 +1,13 @@
 import createApp from './create-app'
 import globalBus from './util/global-bus'
 
-const { app, router } = createApp()
+const { app, router, store } = createApp()
 
-globalBus.$on('toggleRoute', () => {
+if (window.__INITIAL_STATE__) {
+  store.replaceState(window.__INITIAL_STATE__)
+}
+
+globalBus.$on('authorize', () => {
   router.push('/login')
 })
 

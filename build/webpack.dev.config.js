@@ -40,6 +40,12 @@ module.exports = merge(baseWebpackConfig, {
     }]
   },
 
+  resolve: {
+    alias: {
+      'model': path.join(__dirname, '../client/model/client-model.js')
+    }
+  },
+
   // 有助于调试文件，sourceMap 会做代码映射，即编译打包后的代码和源代码相互映射
   devtool: config.dev.devtool, // 'cheap-module-eval-source-map'
 

@@ -20,7 +20,7 @@ userRouter.post('/login', async ctx => {
     ctx.status = 400
     ctx.body = {
       success: false,
-      message: 'Username or password error'
+      message: '用户名或密码错误'
     }
   }
 })

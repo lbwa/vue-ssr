@@ -14,12 +14,27 @@ module.exports = async (ctx, renderer, template) => {
   // koa context 封装了 node 的 request 和 response 对象
   // 特别地，ctx.req 表示 Node 的 request，ctx.request 表示 koa request
   // ctx.path 是 ctx.request.path 的别名，表示请求路径
-  const context = { url: ctx.path }
+
+  // ctx.session.user 于 输入用户名 密码时写入。位于 /server/routers/user.js
+  const context = { url: ctx.path, userInfo: ctx.session.user }
 
   try {
     // 将 vue 实例（renderer，由服务器 bundle 和 clientManifest 构成）渲染为字符串
     // 向 context 对象添加 context.renderStyles() 等方法
     const appString = await renderer.renderToString(context)
+    // 在执行完 appString 后将产生 context.renderState() 方法
+
+    /**
+     * 在服务端重定向未登录时的页面
+     * 1. 在此处重定向的优势在于，用户不会看到重定向的过程
+     * 2. 此处弊端：因为 renderer 是 bundle renderer(dev-ssr 中)，那么之前需要被重
+     * 定向的页面也要 SSR，并且要在 bundle 渲染为 json 之后才能重定向，这样给服务端造
+     * 成了一个性能浪费
+     */
+    if (context.router.currentRoute.fullPath !== ctx.path) {
+      // 重定向并重新渲染新的 SSR 页面
+      return ctx.redirect(context.router.currentRoute.fullPath)
+    }
 
     const { title } = context.meta.inject()
 
@@ -46,7 +61,9 @@ module.exports = async (ctx, renderer, template) => {
        */
       scripts: context.renderScripts(),
 
-      title: title.text()
+      title: title.text(),
+
+      initialState: context.renderState()
     })
 
     // 替换渲染上下文的 body 部分，原本为 dev-ssr 中的 '加载中...' 字样

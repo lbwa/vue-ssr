@@ -1,4 +1,4 @@
-// 废弃
+// 废弃，由 create-app.js 代替
 
 // import Vue from 'vue'
 // import VueRouter from 'vue-router'
