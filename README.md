@@ -34,9 +34,17 @@
 
 ![mind-map][mind-map]
 
-以上是开发环境下的 `SSR mind map`。生产环境中逻辑较为简单，就是没有 `webpack dev server`，其中页面渲染的是打包过后产生的 `server bundle` 和 `clientManifest` 构成的 `renderer`，并与 `ctx` 、`template.ejs` 合并渲染出用户界面。
-
 [mind-map]:https://raw.githubusercontent.com/lbwa/vue-ssr/master/SSR%20mind%20map.png
+
+以上是开发环境下的 `SSR mind map`。
+
+## Build in production mode
+
+本项目生产环境打包默认以 `createRenderer` 方式进行，而非 `createBundleRenderer` 方式，那么以上图中 `renderer`仅由 `clientManifest` **单独**生成，那么 `serverRender` 将改为接受 `renderer`，`ctx`，`template.ejs`，`server bundle`来合并渲染出用户所看到的界面。这么做是为了能在生成 `renderer` 前（即调用最耗时的操作 `renderToString`之前），跳转路由（[createBundleRenderer 方式下的路由跳转]，[createRenderer 方式下的路由跳转]）。
+
+[createBundleRenderer 方式下的路由跳转]:https://github.com/lbwa/vue-ssr/blob/master/server/routers/server-render.js#L27-L37
+
+[createRenderer 方式下的路由跳转]:https://github.com/lbwa/vue-ssr/blob/master/server/routers/server-render-no-bundle.js#L13-L16
 
 ## Build Setup
 
@@ -60,6 +68,10 @@ npm run build
 # Running server in production mode at localhost:8889
 npm run build && npm run start
 
+or
+
+npm run build && pm2 start pm2.yml
+
 # build for production and view the bundle analyzer report
 npm run analyze
 
@@ -69,7 +81,7 @@ npm run unit
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-注：本项目生产环境打包默认以 `createRenderer` 方式进行，可在 `npm run build` 执行之后，执行 `pm2 start pm2.yml` 查看最后打包生成的生产环境页面。
+注：本项目生产环境打包默认以 `createRenderer` 方式进行，可在 `npm run build` 执行之后，执行 `pm2 start pm2.yml` （需提前全局安装 `pm2`）查看最后打包生成的生产环境页面。
 
 ## createBundleRenderer 与 createRenderer 差异
 
